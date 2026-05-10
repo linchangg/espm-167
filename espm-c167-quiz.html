@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESPM C167 — Unit I Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f4efe6;
+    --paper-warm: #ede5d3;
+    --accent: #c4452d;
+    --accent-deep: #8a2e1d;
+    --moss: #4a5d3a;
+    --gold: #b8893a;
+    --line: #1a1612;
+    --shadow: rgba(26, 22, 18, 0.12);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(196, 69, 45, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(74, 93, 58, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 48px 80px;
+  }
+
+  /* ==== HEADER ==== */
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+    color: var(--ink);
+    opacity: 0.7;
+  }
+
+  .meta-bar span:nth-child(2) {
+    text-align: center;
+  }
+
+  .meta-bar span:nth-child(3) {
+    text-align: right;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 300;
+    max-width: 600px;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0.75;
+  }
+
+  .header-ornament {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    line-height: 1.2;
+    text-align: right;
+    opacity: 0.4;
+    letter-spacing: 0.05em;
+  }
+
+  /* ==== CONTROLS ==== */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 20px 24px;
+    background: var(--paper-warm);
+    border: 1px solid var(--line);
+    position: relative;
+  }
+
+  .controls::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 1px solid var(--line);
+    transform: translate(4px, 4px);
+    z-index: -1;
+    background: var(--accent);
+  }
+
+  .control-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 8px;
+  }
+
+  .toggle-group {
+    display: flex;
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.2s;
+    border-right: 1px solid var(--line);
+  }
+
+  .toggle-btn:last-child {
+    border-right: none;
+  }
+
+  .toggle-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .toggle-btn:hover:not(.active) {
+    background: var(--paper-warm);
+  }
+
+  .action-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .action-btn:hover {
+    background: var(--accent);
+  }
+
+  .action-btn.secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .action-btn.secondary:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .stats {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .stats strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ==== MODE: STUDY (single card) ==== */
+  .study-mode {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 40px;
+  }
+
+  .study-mode.active {
+    display: flex;
+  }
+
+  .progress-bar {
+    width: 100%;
+    max-width: 800px;
+    height: 2px;
+    background: rgba(26, 22, 18, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .flashcard {
+    width: 100%;
+    max-width: 800px;
+    height: 460px;
+    perspective: 1500px;
+    cursor: pointer;
+  }
+
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  .card-face::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    border: 1px solid rgba(26, 22, 18, 0.15);
+    pointer-events: none;
+  }
+
+  .card-front {
+    background: var(--paper);
+  }
+
+  .card-back {
+    background: var(--paper-warm);
+    transform: rotateY(180deg);
+  }
+
+  .card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 24px;
+    color: var(--accent);
+  }
+
+  .card-back .card-tag {
+    color: var(--moss);
+  }
+
+  .card-content {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .card-back .card-content {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.55;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .card-flip-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.4;
+  }
+
+  .card-nav {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav-btn:disabled:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  /* ==== MODE: GRID (browse all) ==== */
+  .grid-mode {
+    display: none;
+  }
+
+  .grid-mode.active {
+    display: block;
+  }
+
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .term-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 24px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .term-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .term-card.revealed {
+    background: var(--paper-warm);
+  }
+
+  .term-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+
+  .term-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .term-definition {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, max-height 0.3s;
+  }
+
+  .term-card.revealed .term-definition {
+    opacity: 0.85;
+    max-height: 500px;
+    margin-top: 8px;
+  }
+
+  .term-card.reverse .term-title {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .term-card.reverse.revealed .term-title {
+    opacity: 1;
+  }
+
+  .term-card.reverse .term-definition {
+    opacity: 1;
+    max-height: 500px;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .term-card.reverse.revealed .term-definition {
+    opacity: 0.6;
+    font-size: 13px;
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+  }
+
+  .term-hint {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    opacity: 0.3;
+    letter-spacing: 0.1em;
+  }
+
+  /* ==== FOOTER ==== */
+  footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.5;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ==== RESPONSIVE ==== */
+  @media (max-width: 700px) {
+    .container { padding: 24px 20px 60px; }
+    .controls { padding: 16px; gap: 8px; }
+    .control-label { display: none; }
+    .stats { width: 100%; margin-left: 0; padding-top: 8px; border-top: 1px solid rgba(26,22,18,0.1); }
+    .header-ornament { display: none; }
+    .flashcard { height: 380px; }
+    .card-face { padding: 32px 24px; }
+    footer { flex-direction: column; gap: 8px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-face > * {
+    animation: fadeUp 0.5s ease-out;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="meta-bar">
+      <span>ESPM C167 / Berkeley</span>
+      <span>Unit I — Foundations</span>
+      <span>Spring 2026</span>
+    </div>
+    <h1>Environmental<br>Health <em>&amp;</em> Equity</h1>
+    <p class="subtitle">A study companion for Unit I — covering the value triad, transition frameworks, the burden of disease, and the social architecture of inequality.</p>
+    <div class="header-ornament">
+      ◆ &nbsp; 26 TERMS<br>
+      ◆ &nbsp; 1 UNIT<br>
+      ◆ &nbsp; 2 MODES
+    </div>
+  </header>
+
+  <div class="controls">
+    <span class="control-label">Mode</span>
+    <div class="toggle-group" id="modeToggle">
+      <button class="toggle-btn active" data-mode="study">Study (Single)</button>
+      <button class="toggle-btn" data-mode="grid">Browse (Grid)</button>
+    </div>
+
+    <span class="control-label" style="margin-left: 16px;">Show First</span>
+    <div class="toggle-group" id="directionToggle">
+      <button class="toggle-btn active" data-direction="term">Term → Def</button>
+      <button class="toggle-btn" data-direction="def">Def → Term</button>
+    </div>
+
+    <button class="action-btn secondary" id="shuffleBtn">⇄ Shuffle</button>
+
+    <div class="stats">
+      <span id="statsText">Card <strong id="currentNum">1</strong> of <strong id="totalNum">26</strong></span>
+    </div>
+  </div>
+
+  <!-- STUDY MODE -->
+  <div class="study-mode active" id="studyMode">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-inner">
+        <div class="card-face card-front">
+          <div class="card-tag">◆ Term</div>
+          <div class="card-content" id="cardFront">—</div>
+          <div class="card-flip-hint">click to flip ↻</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-tag">◆ Definition</div>
+          <div class="card-content" id="cardBack">—</div>
+          <div class="card-flip-hint">click to flip ↻</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-nav">
+      <button class="nav-btn" id="prevBtn" title="Previous (←)">←</button>
+      <span class="card-counter" id="cardCounter">01 / 26</span>
+      <button class="nav-btn" id="nextBtn" title="Next (→)">→</button>
+    </div>
+  </div>
+
+  <!-- GRID MODE -->
+  <div class="grid-mode" id="gridMode">
+    <div class="term-grid" id="termGrid"></div>
+  </div>
+
+  <footer>
+    <span>ESPM C167 — Unit I Quiz Review</span>
+    <span>← → arrows · space to flip</span>
+  </footer>
+
+</div>
+
+<script>
+const TERMS = [
+  {
+    term: "Trans-science",
+    def: "A concept (Alvin Weinberg, 1972) describing questions that can be asked of science but cannot be answered by science alone — typically because the answers depend on values, ethics, or politics, or because the empirical answer would require infeasible experiments. Environmental health risk decisions (e.g., 'What level of exposure is acceptable?') are classic trans-scientific issues."
+  },
+  {
+    term: "Value Triad Framework",
+    def: "An analytical framework for environmental health decision-making that recognizes three competing value domains that must be balanced: (1) science/evidence, (2) economics/efficiency, and (3) ethics/equity. No environmental health policy can satisfy all three simultaneously, so trade-offs must be made explicit."
+  },
+  {
+    term: "Social and Environmental Determinants of Health",
+    def: "The non-medical conditions in which people are born, grow, live, work, and age that shape health outcomes. Social determinants include income, education, employment, race, and social support; environmental determinants include air and water quality, housing, the built environment, and exposure to hazards. Together they explain most population-level variation in health, far more than healthcare access does."
+  },
+  {
+    term: "Demographic Transition",
+    def: "The historical shift of populations from high birth rates and high death rates (pre-industrial) through a period of rapid growth (declining death rates, still-high birth rates) to low birth and death rates (post-industrial). Drives population aging and changing dependency ratios."
+  },
+  {
+    term: "Epidemiological Transition",
+    def: "The shift in dominant causes of death from infectious and parasitic diseases (pneumonia, diarrhea, TB) toward chronic and degenerative diseases (heart disease, cancer, diabetes) as societies develop. Originally described by Abdel Omran (1971). Many low- and middle-income countries now face a 'double burden' of both."
+  },
+  {
+    term: "Risk Transition",
+    def: "The shift over the course of development in the dominant types of risks people face — from traditional risks (indoor smoke, unsafe water, undernutrition) to modern risks (outdoor air pollution, chemicals, traffic injuries, obesogenic environments). Often middle-income countries face both types simultaneously."
+  },
+  {
+    term: "Environmental Risk Transition",
+    def: "Kirk Smith's framework describing how environmental health risks shift in scale as societies develop — from household-scale (indoor smoke, unsafe water in poor settings) to community/city-scale (urban air pollution, sanitation in middle-income settings) to global-scale (climate change, ozone depletion in wealthy settings). Risks expand outward in space and time as wealth grows."
+  },
+  {
+    term: "Kirk Smith (1996) on Environmental Risk Transition",
+    def: "Smith's seminal work showing that as countries develop, the dominant environmental health risks transition outward in scale and time — household risks shrink as community risks grow, and eventually global risks dominate. Crucially, the burden of household-scale risks (e.g., indoor air pollution from biomass cooking) falls disproportionately on the global poor and on women and children."
+  },
+  {
+    term: "Risk Overlap: Risk Genesis, Risk Transfer, Risk Synergism",
+    def: "Three ways risks at different scales interact during environmental risk transitions. RISK GENESIS: addressing a risk at one scale creates a new risk at another (e.g., burning coal indoors → outdoor air pollution). RISK TRANSFER: the risk is moved to another population, place, or time (e.g., exporting waste, climate emissions affecting future generations). RISK SYNERGISM: multiple co-occurring risks compound each other (e.g., malnutrition worsens infection mortality)."
+  },
+  {
+    term: "Environmental Burden of Disease",
+    def: "The portion of total disease, disability, and death in a population that is attributable to environmental exposures (air pollution, unsafe water, chemicals, climate, occupational hazards, etc.). The WHO estimates roughly a quarter of global deaths are environmentally mediated. Quantified using attributable fractions and DALYs."
+  },
+  {
+    term: "Global Burden of Disease Study",
+    def: "An ongoing comprehensive effort coordinated by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington to quantify health loss from hundreds of diseases, injuries, and risk factors across countries, age groups, and over time. Uses standardized metrics (DALYs, YLLs, YLDs) and attributable risk methods. Allows global comparisons of health burden."
+  },
+  {
+    term: "Attributable Risk",
+    def: "The portion of disease incidence (or deaths, or DALYs) in a population that can be ascribed to a particular exposure or risk factor — i.e., the burden that would be eliminated if the exposure were removed. Calculated using relative risk and the prevalence of the exposure. Foundational to burden-of-disease quantification."
+  },
+  {
+    term: "Disability Adjusted Life Year (DALY)",
+    def: "A composite metric combining years of life lost to premature death (YLL) with years lived with disability (YLD), weighted by severity. One DALY = one healthy year of life lost. Allows comparison of fatal and non-fatal health outcomes on a single scale, and comparison of very different conditions (e.g., depression vs. heart disease) by their total health burden."
+  },
+  {
+    term: "Global Burden of Disease website, Braverman et al. (2017) and Castro et al. (2022), and other sources on Health Equity",
+    def: "Key resources on health equity. The IHME's GBD compare tool (vizhub.healthdata.org) visualizes disease burden across countries and groups. Braveman et al. (2017) synthesizes the social determinants of health equity, distinguishing equity from equality and emphasizing structural drivers. Castro et al. (2022) examines structural racism as a fundamental cause of health inequities. All emphasize that health gaps reflect unjust, modifiable social structures — not biology."
+  },
+  {
+    term: "Gini Coefficient & Lorenz Curve",
+    def: "Measures of inequality (typically of income or wealth). The LORENZ CURVE plots cumulative share of population (x-axis) against cumulative share of income (y-axis); perfect equality is a 45° line. The GINI COEFFICIENT is twice the area between the Lorenz curve and the equality line — ranging from 0 (perfect equality) to 1 (one person holds everything). Higher Gini = more unequal."
+  },
+  {
+    term: "Social inequality and environmental health",
+    def: "The empirical observation that more unequal societies, and more unequal sub-populations within them, suffer worse environmental health outcomes — both because the disadvantaged bear disproportionate exposures (environmental injustice) and because high inequality itself appears to degrade environmental quality and health for everyone (see Cushing et al. 2015). The link runs in both directions: inequality drives bad environmental outcomes, and environmental harm drives inequality."
+  },
+  {
+    term: "Social gradients in health",
+    def: "The finding — robust across countries and conditions — that health outcomes improve incrementally with each step up the socioeconomic ladder. This is not a poor-vs.-rich gap but a continuous gradient: middle-income people are sicker than the wealthy, just as the poor are sicker than the middle-income. Implies that absolute material deprivation cannot fully explain the pattern."
+  },
+  {
+    term: "The Whitehall studies",
+    def: "Landmark longitudinal studies of British civil servants (Whitehall I starting 1967, Whitehall II in 1985), led by Michael Marmot. All participants had stable employment, healthcare, and incomes above poverty — yet researchers found a steep social gradient in mortality and morbidity by employment grade. Lower-rank workers had roughly three times the mortality of top-rank ones. The studies established that the social gradient in health is not just about poverty, pointing to the importance of control, status, and chronic stress."
+  },
+  {
+    term: "The Great Gatsby Curve",
+    def: "An empirical relationship (popularized by Alan Krueger, 2012) showing that countries with higher income inequality (Gini) tend to have lower intergenerational economic mobility — i.e., a child's adult income is more strongly predicted by their parents' income. Inequality and immobility reinforce each other; the American Dream of mobility is statistically weakest in the most unequal countries."
+  },
+  {
+    term: "Materialist and Psycho-social approaches to linking experience of inequities and health",
+    def: "Two frameworks explaining how inequality damages health. MATERIALIST approaches emphasize differential access to material resources — housing quality, nutrition, healthcare, neighborhood environments, occupational exposures. PSYCHO-SOCIAL approaches (Marmot, Wilkinson) emphasize the chronic stress, status anxiety, eroded social cohesion, and shame produced by living in a hierarchical, unequal society — which raise cortisol, suppress immunity, and damage health independent of absolute material conditions. Most scholars see the two as complementary."
+  },
+  {
+    term: "Pathways linking inequality and health",
+    def: "The mechanisms through which social inequality produces health inequality. Includes: (1) material pathways (differential exposures, resources, neighborhoods); (2) psychosocial pathways (chronic stress, status anxiety, eroded trust); (3) behavioral pathways (smoking, diet, sleep — themselves shaped by stress and resources); (4) political pathways (the wealthy capture policy, weakening environmental and labor protections); and (5) life-course pathways (early-life disadvantage embedded in adult health)."
+  },
+  {
+    term: "Racial segregation and environmental quality",
+    def: "The finding that racially segregated neighborhoods — particularly Black, Latino, and Indigenous communities in the U.S. — face systematically worse environmental quality: more polluting industry, freeways, hazardous waste sites, and worse air; fewer parks and tree canopy. Segregation, often the legacy of redlining and discriminatory policy, concentrates environmental burdens by race independent of income. A core concern of environmental justice scholarship."
+  },
+  {
+    term: "Cushing et al. (2015) on effects of social inequality on the environment",
+    def: "An influential review (Cushing, Morello-Frosch, Wier, Hubbard) arguing that social inequality is not just a consequence but a cause of environmental degradation. Mechanisms: (1) the politically powerful insulate themselves from environmental harm and weaken protections; (2) inequality erodes social cohesion needed for collective environmental action; (3) status competition drives consumption; (4) marginalized communities lack the political power to resist siting of polluting facilities. Implication: reducing inequality is itself an environmental policy."
+  },
+  {
+    term: "Inequality & Trust and Cooperation",
+    def: "Empirical work (Wilkinson & Pickett, Putnam, Uslaner) showing that more unequal societies have lower social trust, less civic participation, and weaker cooperation. Hierarchies erode the sense that 'we are all in this together.' This matters environmentally because collective action problems — climate, conservation, pollution — require trust and cooperation to solve. Inequality therefore undermines the social capacity to address shared environmental challenges."
+  },
+  {
+    term: "Absolute Income Hypothesis & Relative Income Hypothesis",
+    def: "Two competing accounts of how income relates to wellbeing/health. ABSOLUTE INCOME HYPOTHESIS: what matters is how much you have in real terms — more money = better health, with diminishing returns. RELATIVE INCOME HYPOTHESIS: what matters is your income relative to others in your reference group — being poorer than your neighbors damages health independent of your absolute level. The relative-income view is supported by social-gradient findings and by cross-country comparisons in which more equal countries are healthier even at the same average income."
+  },
+  {
+    term: "Inequality, Equity, and Justice",
+    def: "Three related but distinct concepts. INEQUALITY: descriptive — an uneven distribution of something (income, exposures, health). EQUITY: normative — the absence of unfair, avoidable, or remediable differences between groups; equal treatment may be inequitable if starting conditions differ. JUSTICE: the broader normative framework concerning what people are owed — distributive (who gets what), procedural (fair processes), and recognitional (whose perspectives count). Environmental justice requires attending to all three dimensions."
+  },
+  {
+    term: "TSPB Assignment sheet information",
+    def: "Refers to the Trans-Science Policy Brief (TSPB) — the major Unit I writing assignment. Students identify a current trans-scientific environmental health controversy, characterize the scientific evidence and its uncertainties, map the value-triad trade-offs (science / economics / ethics-equity), and recommend a policy stance with explicit reasoning. The assignment trains students to write for decision-makers under irreducible uncertainty. Consult the assignment sheet on bCourses for specific length, formatting, and rubric requirements."
+  }
+];
+
+// ===== STATE =====
+let currentIndex = 0;
+let mode = 'study'; // 'study' | 'grid'
+let direction = 'term'; // 'term' | 'def'
+let order = TERMS.map((_, i) => i);
+
+// ===== ELEMENTS =====
+const flashcard = document.getElementById('flashcard');
+const cardFront = document.getElementById('cardFront');
+const cardBack = document.getElementById('cardBack');
+const cardCounter = document.getElementById('cardCounter');
+const progressFill = document.getElementById('progressFill');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const studyMode = document.getElementById('studyMode');
+const gridMode = document.getElementById('gridMode');
+const termGrid = document.getElementById('termGrid');
+const currentNum = document.getElementById('currentNum');
+const totalNum = document.getElementById('totalNum');
+const statsText = document.getElementById('statsText');
+const cardTags = document.querySelectorAll('.card-tag');
+
+totalNum.textContent = TERMS.length;
+
+// ===== STUDY MODE =====
+function renderCard() {
+  flashcard.classList.remove('flipped');
+  setTimeout(() => {
+    const t = TERMS[order[currentIndex]];
+    if (direction === 'term') {
+      cardFront.textContent = t.term;
+      cardBack.textContent = t.def;
+      document.querySelector('.card-front .card-tag').textContent = '◆ Term';
+      document.querySelector('.card-back .card-tag').textContent = '◆ Definition';
+    } else {
+      cardFront.textContent = t.def;
+      cardBack.textContent = t.term;
+      document.querySelector('.card-front .card-tag').textContent = '◆ Definition';
+      document.querySelector('.card-back .card-tag').textContent = '◆ Term';
+    }
+    // Adjust front font size if showing definition
+    if (direction === 'def') {
+      cardFront.style.fontSize = 'clamp(16px, 2vw, 20px)';
+      cardFront.style.lineHeight = '1.55';
+      cardBack.style.fontSize = 'clamp(28px, 4vw, 44px)';
+      cardBack.style.lineHeight = '1.15';
+    } else {
+      cardFront.style.fontSize = '';
+      cardFront.style.lineHeight = '';
+      cardBack.style.fontSize = '';
+      cardBack.style.lineHeight = '';
+    }
+  }, flashcard.classList.contains('flipped') ? 350 : 0);
+
+  cardCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(TERMS.length).padStart(2, '0')}`;
+  currentNum.textContent = currentIndex + 1;
+  progressFill.style.width = `${((currentIndex + 1) / TERMS.length) * 100}%`;
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === TERMS.length - 1;
+}
+
+flashcard.addEventListener('click', () => {
+  flashcard.classList.toggle('flipped');
+});
+
+prevBtn.addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderCard();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentIndex < TERMS.length - 1) {
+    currentIndex++;
+    renderCard();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (mode !== 'study') return;
+  if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; renderCard(); }
+  else if (e.key === 'ArrowRight' && currentIndex < TERMS.length - 1) { currentIndex++; renderCard(); }
+  else if (e.key === ' ') { e.preventDefault(); flashcard.classList.toggle('flipped'); }
+});
+
+// ===== GRID MODE =====
+function renderGrid() {
+  termGrid.innerHTML = '';
+  order.forEach((termIdx, i) => {
+    const t = TERMS[termIdx];
+    const card = document.createElement('div');
+    card.className = 'term-card' + (direction === 'def' ? ' reverse' : '');
+    card.innerHTML = `
+      <div class="term-hint">click ↻</div>
+      <div>
+        <div class="term-number">№ ${String(i + 1).padStart(2, '0')}</div>
+        <div class="term-title">${t.term}</div>
+        <div class="term-definition">${t.def}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => {
+      card.classList.toggle('revealed');
+    });
+    termGrid.appendChild(card);
+  });
+}
+
+// ===== MODE TOGGLES =====
+document.getElementById('modeToggle').addEventListener('click', (e) => {
+  if (!e.target.matches('.toggle-btn')) return;
+  document.querySelectorAll('#modeToggle .toggle-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  mode = e.target.dataset.mode;
+  if (mode === 'study') {
+    studyMode.classList.add('active');
+    gridMode.classList.remove('active');
+    statsText.innerHTML = `Card <strong id="currentNum">${currentIndex + 1}</strong> of <strong>${TERMS.length}</strong>`;
+  } else {
+    studyMode.classList.remove('active');
+    gridMode.classList.add('active');
+    renderGrid();
+    statsText.innerHTML = `<strong>${TERMS.length}</strong> terms · click any to reveal`;
+  }
+});
+
+document.getElementById('directionToggle').addEventListener('click', (e) => {
+  if (!e.target.matches('.toggle-btn')) return;
+  document.querySelectorAll('#directionToggle .toggle-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  direction = e.target.dataset.direction;
+  if (mode === 'study') renderCard();
+  else renderGrid();
+});
+
+// ===== SHUFFLE =====
+document.getElementById('shuffleBtn').addEventListener('click', () => {
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  currentIndex = 0;
+  if (mode === 'study') renderCard();
+  else renderGrid();
+});
+
+// ===== INIT =====
+renderCard();
+</script>
+</body>
+</html>
