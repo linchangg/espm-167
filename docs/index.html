@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESPM C167 — Unit I Flashcards</title>
+<title>ESPM C167 — Unit I/II/III Flashcards</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -15,16 +15,17 @@
     --accent: #c4452d;
     --accent-deep: #8a2e1d;
     --moss: #4a5d3a;
+    --teal: #2a6e6e;
+    --plum: #6d3a5b;
     --gold: #b8893a;
     --line: #1a1612;
     --shadow: rgba(26, 22, 18, 0.12);
+
+    /* unit accent (set by JS) */
+    --unit-accent: var(--accent);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
     background: var(--paper);
@@ -68,7 +69,7 @@
   header {
     border-bottom: 1px solid var(--line);
     padding-bottom: 32px;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     position: relative;
   }
 
@@ -85,13 +86,8 @@
     opacity: 0.7;
   }
 
-  .meta-bar span:nth-child(2) {
-    text-align: center;
-  }
-
-  .meta-bar span:nth-child(3) {
-    text-align: right;
-  }
+  .meta-bar span:nth-child(3) { text-align: right; }
+  .meta-bar span:nth-child(2) { text-align: center; }
 
   h1 {
     font-family: 'Fraunces', serif;
@@ -106,7 +102,8 @@
   h1 em {
     font-style: normal;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--unit-accent);
+    transition: color 0.4s;
   }
 
   .subtitle {
@@ -119,16 +116,81 @@
     opacity: 0.75;
   }
 
-  .header-ornament {
+  /* ==== UNIT SELECTOR (top bar) ==== */
+  .unit-selector {
+    display: flex;
+    gap: 0;
+    margin-bottom: 32px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    overflow: hidden;
+    flex-wrap: wrap;
+  }
+
+  .unit-btn {
+    flex: 1;
+    min-width: 160px;
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--line);
+    padding: 18px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s;
+    position: relative;
+    font-family: inherit;
+    color: var(--ink);
+  }
+
+  .unit-btn:last-child { border-right: none; }
+
+  .unit-btn:hover { background: var(--paper-warm); }
+
+  .unit-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .unit-btn.active .unit-num,
+  .unit-btn.active .unit-name {
+    color: var(--paper);
+  }
+
+  .unit-btn.active::after {
+    content: '';
     position: absolute;
-    top: 60px;
+    bottom: 0;
+    left: 0;
     right: 0;
+    height: 3px;
+    background: var(--unit-accent);
+  }
+
+  .unit-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    line-height: 1.2;
-    text-align: right;
-    opacity: 0.4;
-    letter-spacing: 0.05em;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--unit-accent);
+    display: block;
+    margin-bottom: 4px;
+    transition: color 0.25s;
+  }
+
+  .unit-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .unit-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.55;
+    margin-top: 6px;
+    letter-spacing: 0.1em;
   }
 
   /* ==== CONTROLS ==== */
@@ -147,14 +209,12 @@
   .controls::before {
     content: '';
     position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
     border: 1px solid var(--line);
     transform: translate(4px, 4px);
     z-index: -1;
-    background: var(--accent);
+    background: var(--unit-accent);
+    transition: background 0.4s;
   }
 
   .control-label {
@@ -185,18 +245,10 @@
     border-right: 1px solid var(--line);
   }
 
-  .toggle-btn:last-child {
-    border-right: none;
-  }
+  .toggle-btn:last-child { border-right: none; }
 
-  .toggle-btn.active {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .toggle-btn:hover:not(.active) {
-    background: var(--paper-warm);
-  }
+  .toggle-btn.active { background: var(--ink); color: var(--paper); }
+  .toggle-btn:hover:not(.active) { background: var(--paper-warm); }
 
   .action-btn {
     background: var(--ink);
@@ -211,20 +263,14 @@
     transition: all 0.2s;
   }
 
-  .action-btn:hover {
-    background: var(--accent);
-  }
+  .action-btn:hover { background: var(--unit-accent); }
 
   .action-btn.secondary {
     background: transparent;
     color: var(--ink);
     border: 1px solid var(--line);
   }
-
-  .action-btn.secondary:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
+  .action-btn.secondary:hover { background: var(--ink); color: var(--paper); }
 
   .stats {
     margin-left: auto;
@@ -234,11 +280,12 @@
   }
 
   .stats strong {
-    color: var(--accent);
+    color: var(--unit-accent);
     font-weight: 500;
+    transition: color 0.4s;
   }
 
-  /* ==== MODE: STUDY (single card) ==== */
+  /* ==== STUDY MODE ==== */
   .study-mode {
     display: none;
     flex-direction: column;
@@ -246,10 +293,7 @@
     gap: 32px;
     margin-top: 40px;
   }
-
-  .study-mode.active {
-    display: flex;
-  }
+  .study-mode.active { display: flex; }
 
   .progress-bar {
     width: 100%;
@@ -262,24 +306,16 @@
 
   .progress-fill {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     height: 100%;
-    background: var(--accent);
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card-counter {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    background: var(--unit-accent);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s;
   }
 
   .flashcard {
     width: 100%;
     max-width: 800px;
-    height: 460px;
+    height: 480px;
     perspective: 1500px;
     cursor: pointer;
   }
@@ -292,9 +328,7 @@
     transform-style: preserve-3d;
   }
 
-  .flashcard.flipped .flashcard-inner {
-    transform: rotateY(180deg);
-  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
 
   .card-face {
     position: absolute;
@@ -308,21 +342,15 @@
     flex-direction: column;
     justify-content: center;
     box-shadow: 8px 8px 0 var(--ink);
+    overflow-y: auto;
   }
 
   .card-face::before {
     content: '';
     position: absolute;
-    top: 16px;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    top: 16px; left: 16px; right: 16px; bottom: 16px;
     border: 1px solid rgba(26, 22, 18, 0.15);
     pointer-events: none;
-  }
-
-  .card-front {
-    background: var(--paper);
   }
 
   .card-back {
@@ -336,23 +364,33 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: 24px;
-    color: var(--accent);
+    color: var(--unit-accent);
+    transition: color 0.4s;
   }
 
-  .card-back .card-tag {
-    color: var(--moss);
+  .card-unit-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    position: absolute;
+    top: 30px;
+    right: 32px;
+    opacity: 0.5;
   }
+
+  .card-back .card-tag { color: var(--moss); }
 
   .card-content {
     font-family: 'Fraunces', serif;
-    font-size: clamp(28px, 4vw, 44px);
+    font-size: clamp(28px, 4vw, 42px);
     line-height: 1.15;
     font-weight: 400;
     letter-spacing: -0.02em;
   }
 
   .card-back .card-content {
-    font-size: clamp(16px, 2vw, 20px);
+    font-size: clamp(15px, 1.6vw, 18px);
     line-height: 1.55;
     font-weight: 400;
     letter-spacing: 0;
@@ -390,29 +428,20 @@
     justify-content: center;
   }
 
-  .nav-btn:hover {
-    background: var(--ink);
-    color: var(--paper);
+  .nav-btn:hover { background: var(--ink); color: var(--paper); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .nav-btn:disabled:hover { background: transparent; color: var(--ink); }
+
+  .card-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
   }
 
-  .nav-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .nav-btn:disabled:hover {
-    background: transparent;
-    color: var(--ink);
-  }
-
-  /* ==== MODE: GRID (browse all) ==== */
-  .grid-mode {
-    display: none;
-  }
-
-  .grid-mode.active {
-    display: block;
-  }
+  /* ==== GRID MODE ==== */
+  .grid-mode { display: none; }
+  .grid-mode.active { display: block; }
 
   .term-grid {
     display: grid;
@@ -438,21 +467,32 @@
     box-shadow: 6px 6px 0 var(--ink);
   }
 
-  .term-card.revealed {
-    background: var(--paper-warm);
-  }
+  .term-card.revealed { background: var(--paper-warm); }
 
   .term-number {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: var(--accent);
+    color: var(--unit-accent);
     letter-spacing: 0.15em;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
+    transition: color 0.4s;
+  }
+
+  .term-card .unit-pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 2px 6px;
+    border: 1px solid currentColor;
+    margin-bottom: 10px;
+    opacity: 0.55;
   }
 
   .term-title {
     font-family: 'Fraunces', serif;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -472,7 +512,7 @@
 
   .term-card.revealed .term-definition {
     opacity: 0.85;
-    max-height: 500px;
+    max-height: 800px;
     margin-top: 8px;
   }
 
@@ -480,20 +520,16 @@
     opacity: 0;
     transition: opacity 0.3s;
   }
-
-  .term-card.reverse.revealed .term-title {
-    opacity: 1;
-  }
+  .term-card.reverse.revealed .term-title { opacity: 1; }
 
   .term-card.reverse .term-definition {
     opacity: 1;
-    max-height: 500px;
+    max-height: 800px;
     font-family: 'Fraunces', serif;
-    font-size: 16px;
+    font-size: 15px;
     font-style: italic;
     line-height: 1.4;
   }
-
   .term-card.reverse.revealed .term-definition {
     opacity: 0.6;
     font-size: 13px;
@@ -525,26 +561,23 @@
     justify-content: space-between;
   }
 
-  /* ==== RESPONSIVE ==== */
   @media (max-width: 700px) {
     .container { padding: 24px 20px 60px; }
     .controls { padding: 16px; gap: 8px; }
     .control-label { display: none; }
     .stats { width: 100%; margin-left: 0; padding-top: 8px; border-top: 1px solid rgba(26,22,18,0.1); }
-    .header-ornament { display: none; }
-    .flashcard { height: 380px; }
+    .flashcard { height: 460px; }
     .card-face { padding: 32px 24px; }
     footer { flex-direction: column; gap: 8px; }
+    .unit-btn { flex: 1 1 50%; min-width: 50%; border-bottom: 1px solid var(--line); }
+    .unit-btn:nth-last-child(-n+2) { border-bottom: none; }
   }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  .card-face > * {
-    animation: fadeUp 0.5s ease-out;
-  }
+  .card-face > * { animation: fadeUp 0.5s ease-out; }
 </style>
 </head>
 <body>
@@ -553,23 +586,42 @@
   <header>
     <div class="meta-bar">
       <span>ESPM C167 / Berkeley</span>
-      <span>Unit I — Foundations</span>
+      <span id="unitDescription">Units I–III Combined</span>
       <span>Spring 2026</span>
     </div>
     <h1>Environmental<br>Health <em>&amp;</em> Equity</h1>
-    <p class="subtitle">A study companion for Unit I — covering the value triad, transition frameworks, the burden of disease, and the social architecture of inequality.</p>
-    <div class="header-ornament">
-      ◆ &nbsp; 26 TERMS<br>
-      ◆ &nbsp; 1 UNIT<br>
-      ◆ &nbsp; 2 MODES
-    </div>
+    <p class="subtitle">Flashcards for Units I (Foundations), II (Chemicals), and III (Risk Assessment) — built from the lecture slide decks.</p>
   </header>
+
+  <!-- UNIT SELECTOR -->
+  <div class="unit-selector" id="unitSelector">
+    <button class="unit-btn" data-unit="1">
+      <span class="unit-num">◆ Unit I</span>
+      <span class="unit-name">Foundations</span>
+      <div class="unit-count" data-count="1">— terms</div>
+    </button>
+    <button class="unit-btn" data-unit="2">
+      <span class="unit-num">◆ Unit II</span>
+      <span class="unit-name">Chemicals</span>
+      <div class="unit-count" data-count="2">— terms</div>
+    </button>
+    <button class="unit-btn" data-unit="3">
+      <span class="unit-num">◆ Unit III</span>
+      <span class="unit-name">Risk Assessment</span>
+      <div class="unit-count" data-count="3">— terms</div>
+    </button>
+    <button class="unit-btn active" data-unit="all">
+      <span class="unit-num">◆ All Units</span>
+      <span class="unit-name">Combined Review</span>
+      <div class="unit-count" data-count="all">— terms</div>
+    </button>
+  </div>
 
   <div class="controls">
     <span class="control-label">Mode</span>
     <div class="toggle-group" id="modeToggle">
-      <button class="toggle-btn active" data-mode="study">Study (Single)</button>
-      <button class="toggle-btn" data-mode="grid">Browse (Grid)</button>
+      <button class="toggle-btn active" data-mode="study">Study</button>
+      <button class="toggle-btn" data-mode="grid">Grid</button>
     </div>
 
     <span class="control-label" style="margin-left: 16px;">Show First</span>
@@ -581,25 +633,25 @@
     <button class="action-btn secondary" id="shuffleBtn">⇄ Shuffle</button>
 
     <div class="stats">
-      <span id="statsText">Card <strong id="currentNum">1</strong> of <strong id="totalNum">26</strong></span>
+      <span id="statsText">Card <strong>1</strong> of <strong>—</strong></span>
     </div>
   </div>
 
   <!-- STUDY MODE -->
   <div class="study-mode active" id="studyMode">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
     <div class="flashcard" id="flashcard">
       <div class="flashcard-inner">
         <div class="card-face card-front">
-          <div class="card-tag">◆ Term</div>
+          <div class="card-tag" id="cardFrontTag">◆ Term</div>
+          <span class="card-unit-label" id="cardFrontUnit"></span>
           <div class="card-content" id="cardFront">—</div>
           <div class="card-flip-hint">click to flip ↻</div>
         </div>
         <div class="card-face card-back">
-          <div class="card-tag">◆ Definition</div>
+          <div class="card-tag" id="cardBackTag">◆ Definition</div>
+          <span class="card-unit-label" id="cardBackUnit"></span>
           <div class="card-content" id="cardBack">—</div>
           <div class="card-flip-hint">click to flip ↻</div>
         </div>
@@ -608,7 +660,7 @@
 
     <div class="card-nav">
       <button class="nav-btn" id="prevBtn" title="Previous (←)">←</button>
-      <span class="card-counter" id="cardCounter">01 / 26</span>
+      <span class="card-counter" id="cardCounter">— / —</span>
       <button class="nav-btn" id="nextBtn" title="Next (→)">→</button>
     </div>
   </div>
@@ -619,134 +671,148 @@
   </div>
 
   <footer>
-    <span>ESPM C167 — Unit I Quiz Review</span>
+    <span>ESPM C167 — Units I, II & III</span>
     <span>← → arrows · space to flip</span>
   </footer>
 
 </div>
 
 <script>
-const TERMS = [
-  {
-    term: "Trans-science",
-    def: "A concept (Alvin Weinberg, 1972) describing questions that can be asked of science but cannot be answered by science alone — typically because the answers depend on values, ethics, or politics, or because the empirical answer would require infeasible experiments. Environmental health risk decisions (e.g., 'What level of exposure is acceptable?') are classic trans-scientific issues."
-  },
-  {
-    term: "Value Triad Framework",
-    def: "An analytical framework for environmental health decision-making that recognizes three competing value domains that must be balanced: (1) science/evidence, (2) economics/efficiency, and (3) ethics/equity. No environmental health policy can satisfy all three simultaneously, so trade-offs must be made explicit."
-  },
-  {
-    term: "Social and Environmental Determinants of Health",
-    def: "The non-medical conditions in which people are born, grow, live, work, and age that shape health outcomes. Social determinants include income, education, employment, race, and social support; environmental determinants include air and water quality, housing, the built environment, and exposure to hazards. Together they explain most population-level variation in health, far more than healthcare access does."
-  },
-  {
-    term: "Demographic Transition",
-    def: "The historical shift of populations from high birth rates and high death rates (pre-industrial) through a period of rapid growth (declining death rates, still-high birth rates) to low birth and death rates (post-industrial). Drives population aging and changing dependency ratios."
-  },
-  {
-    term: "Epidemiological Transition",
-    def: "The shift in dominant causes of death from infectious and parasitic diseases (pneumonia, diarrhea, TB) toward chronic and degenerative diseases (heart disease, cancer, diabetes) as societies develop. Originally described by Abdel Omran (1971). Many low- and middle-income countries now face a 'double burden' of both."
-  },
-  {
-    term: "Risk Transition",
-    def: "The shift over the course of development in the dominant types of risks people face — from traditional risks (indoor smoke, unsafe water, undernutrition) to modern risks (outdoor air pollution, chemicals, traffic injuries, obesogenic environments). Often middle-income countries face both types simultaneously."
-  },
-  {
-    term: "Environmental Risk Transition",
-    def: "Kirk Smith's framework describing how environmental health risks shift in scale as societies develop — from household-scale (indoor smoke, unsafe water in poor settings) to community/city-scale (urban air pollution, sanitation in middle-income settings) to global-scale (climate change, ozone depletion in wealthy settings). Risks expand outward in space and time as wealth grows."
-  },
-  {
-    term: "Kirk Smith (1996) on Environmental Risk Transition",
-    def: "Smith's seminal work showing that as countries develop, the dominant environmental health risks transition outward in scale and time — household risks shrink as community risks grow, and eventually global risks dominate. Crucially, the burden of household-scale risks (e.g., indoor air pollution from biomass cooking) falls disproportionately on the global poor and on women and children."
-  },
-  {
-    term: "Risk Overlap: Risk Genesis, Risk Transfer, Risk Synergism",
-    def: "Three ways risks at different scales interact during environmental risk transitions. RISK GENESIS: addressing a risk at one scale creates a new risk at another (e.g., burning coal indoors → outdoor air pollution). RISK TRANSFER: the risk is moved to another population, place, or time (e.g., exporting waste, climate emissions affecting future generations). RISK SYNERGISM: multiple co-occurring risks compound each other (e.g., malnutrition worsens infection mortality)."
-  },
-  {
-    term: "Environmental Burden of Disease",
-    def: "The portion of total disease, disability, and death in a population that is attributable to environmental exposures (air pollution, unsafe water, chemicals, climate, occupational hazards, etc.). The WHO estimates roughly a quarter of global deaths are environmentally mediated. Quantified using attributable fractions and DALYs."
-  },
-  {
-    term: "Global Burden of Disease Study",
-    def: "An ongoing comprehensive effort coordinated by the Institute for Health Metrics and Evaluation (IHME) at the University of Washington to quantify health loss from hundreds of diseases, injuries, and risk factors across countries, age groups, and over time. Uses standardized metrics (DALYs, YLLs, YLDs) and attributable risk methods. Allows global comparisons of health burden."
-  },
-  {
-    term: "Attributable Risk",
-    def: "The portion of disease incidence (or deaths, or DALYs) in a population that can be ascribed to a particular exposure or risk factor — i.e., the burden that would be eliminated if the exposure were removed. Calculated using relative risk and the prevalence of the exposure. Foundational to burden-of-disease quantification."
-  },
-  {
-    term: "Disability Adjusted Life Year (DALY)",
-    def: "A composite metric combining years of life lost to premature death (YLL) with years lived with disability (YLD), weighted by severity. One DALY = one healthy year of life lost. Allows comparison of fatal and non-fatal health outcomes on a single scale, and comparison of very different conditions (e.g., depression vs. heart disease) by their total health burden."
-  },
-  {
-    term: "Global Burden of Disease website, Braverman et al. (2017) and Castro et al. (2022), and other sources on Health Equity",
-    def: "Key resources on health equity. The IHME's GBD compare tool (vizhub.healthdata.org) visualizes disease burden across countries and groups. Braveman et al. (2017) synthesizes the social determinants of health equity, distinguishing equity from equality and emphasizing structural drivers. Castro et al. (2022) examines structural racism as a fundamental cause of health inequities. All emphasize that health gaps reflect unjust, modifiable social structures — not biology."
-  },
-  {
-    term: "Gini Coefficient & Lorenz Curve",
-    def: "Measures of inequality (typically of income or wealth). The LORENZ CURVE plots cumulative share of population (x-axis) against cumulative share of income (y-axis); perfect equality is a 45° line. The GINI COEFFICIENT is twice the area between the Lorenz curve and the equality line — ranging from 0 (perfect equality) to 1 (one person holds everything). Higher Gini = more unequal."
-  },
-  {
-    term: "Social inequality and environmental health",
-    def: "The empirical observation that more unequal societies, and more unequal sub-populations within them, suffer worse environmental health outcomes — both because the disadvantaged bear disproportionate exposures (environmental injustice) and because high inequality itself appears to degrade environmental quality and health for everyone (see Cushing et al. 2015). The link runs in both directions: inequality drives bad environmental outcomes, and environmental harm drives inequality."
-  },
-  {
-    term: "Social gradients in health",
-    def: "The finding — robust across countries and conditions — that health outcomes improve incrementally with each step up the socioeconomic ladder. This is not a poor-vs.-rich gap but a continuous gradient: middle-income people are sicker than the wealthy, just as the poor are sicker than the middle-income. Implies that absolute material deprivation cannot fully explain the pattern."
-  },
-  {
-    term: "The Whitehall studies",
-    def: "Landmark longitudinal studies of British civil servants (Whitehall I starting 1967, Whitehall II in 1985), led by Michael Marmot. All participants had stable employment, healthcare, and incomes above poverty — yet researchers found a steep social gradient in mortality and morbidity by employment grade. Lower-rank workers had roughly three times the mortality of top-rank ones. The studies established that the social gradient in health is not just about poverty, pointing to the importance of control, status, and chronic stress."
-  },
-  {
-    term: "The Great Gatsby Curve",
-    def: "An empirical relationship (popularized by Alan Krueger, 2012) showing that countries with higher income inequality (Gini) tend to have lower intergenerational economic mobility — i.e., a child's adult income is more strongly predicted by their parents' income. Inequality and immobility reinforce each other; the American Dream of mobility is statistically weakest in the most unequal countries."
-  },
-  {
-    term: "Materialist and Psycho-social approaches to linking experience of inequities and health",
-    def: "Two frameworks explaining how inequality damages health. MATERIALIST approaches emphasize differential access to material resources — housing quality, nutrition, healthcare, neighborhood environments, occupational exposures. PSYCHO-SOCIAL approaches (Marmot, Wilkinson) emphasize the chronic stress, status anxiety, eroded social cohesion, and shame produced by living in a hierarchical, unequal society — which raise cortisol, suppress immunity, and damage health independent of absolute material conditions. Most scholars see the two as complementary."
-  },
-  {
-    term: "Pathways linking inequality and health",
-    def: "The mechanisms through which social inequality produces health inequality. Includes: (1) material pathways (differential exposures, resources, neighborhoods); (2) psychosocial pathways (chronic stress, status anxiety, eroded trust); (3) behavioral pathways (smoking, diet, sleep — themselves shaped by stress and resources); (4) political pathways (the wealthy capture policy, weakening environmental and labor protections); and (5) life-course pathways (early-life disadvantage embedded in adult health)."
-  },
-  {
-    term: "Racial segregation and environmental quality",
-    def: "The finding that racially segregated neighborhoods — particularly Black, Latino, and Indigenous communities in the U.S. — face systematically worse environmental quality: more polluting industry, freeways, hazardous waste sites, and worse air; fewer parks and tree canopy. Segregation, often the legacy of redlining and discriminatory policy, concentrates environmental burdens by race independent of income. A core concern of environmental justice scholarship."
-  },
-  {
-    term: "Cushing et al. (2015) on effects of social inequality on the environment",
-    def: "An influential review (Cushing, Morello-Frosch, Wier, Hubbard) arguing that social inequality is not just a consequence but a cause of environmental degradation. Mechanisms: (1) the politically powerful insulate themselves from environmental harm and weaken protections; (2) inequality erodes social cohesion needed for collective environmental action; (3) status competition drives consumption; (4) marginalized communities lack the political power to resist siting of polluting facilities. Implication: reducing inequality is itself an environmental policy."
-  },
-  {
-    term: "Inequality & Trust and Cooperation",
-    def: "Empirical work (Wilkinson & Pickett, Putnam, Uslaner) showing that more unequal societies have lower social trust, less civic participation, and weaker cooperation. Hierarchies erode the sense that 'we are all in this together.' This matters environmentally because collective action problems — climate, conservation, pollution — require trust and cooperation to solve. Inequality therefore undermines the social capacity to address shared environmental challenges."
-  },
-  {
-    term: "Absolute Income Hypothesis & Relative Income Hypothesis",
-    def: "Two competing accounts of how income relates to wellbeing/health. ABSOLUTE INCOME HYPOTHESIS: what matters is how much you have in real terms — more money = better health, with diminishing returns. RELATIVE INCOME HYPOTHESIS: what matters is your income relative to others in your reference group — being poorer than your neighbors damages health independent of your absolute level. The relative-income view is supported by social-gradient findings and by cross-country comparisons in which more equal countries are healthier even at the same average income."
-  },
-  {
-    term: "Inequality, Equity, and Justice",
-    def: "Three related but distinct concepts. INEQUALITY: descriptive — an uneven distribution of something (income, exposures, health). EQUITY: normative — the absence of unfair, avoidable, or remediable differences between groups; equal treatment may be inequitable if starting conditions differ. JUSTICE: the broader normative framework concerning what people are owed — distributive (who gets what), procedural (fair processes), and recognitional (whose perspectives count). Environmental justice requires attending to all three dimensions."
-  },
-  {
-    term: "TSPB Assignment sheet information",
-    def: "Refers to the Trans-Science Policy Brief (TSPB) — the major Unit I writing assignment. Students identify a current trans-scientific environmental health controversy, characterize the scientific evidence and its uncertainties, map the value-triad trade-offs (science / economics / ethics-equity), and recommend a policy stance with explicit reasoning. The assignment trains students to write for decision-makers under irreducible uncertainty. Consult the assignment sheet on bCourses for specific length, formatting, and rubric requirements."
-  }
+// =====================================================
+// UNIT I (REVISED — corrections applied from slide review)
+// =====================================================
+const UNIT_1 = [
+  { term: "Trans-science", def: "Concept from Alvin Weinberg (1972): questions that can be stated in scientific terms but are 'in principle beyond the proficiency of science to answer' — policy questions that 'transcend' science, where science frames the question but the answer is ultimately political, economic, and moral. Environmental health is full of such issues (e.g., 'what level of exposure is acceptable?')." },
+  { term: "Value Triad Framework", def: "Framework from Walt & Gilson (1994) describing the three competing value domains in health-and-environment policy: ENVIRONMENT (human and intrinsic value of nature), ECONOMIC (wealth accumulation, free trade, growth), and EQUITY (wages, working conditions, public health, welfare, education). The three E's. Policy struggles are conflicts among these three values; trade-offs must be made explicit." },
+  { term: "Social and Environmental Determinants of Health", def: "The non-medical factors that shape health outcomes. SDH (WHO): conditions in which people are born, grow, work, live, and age — economic policies, social norms, political systems. EDH (PAHO): physical, chemical, and biological factors external to a person, plus related behaviors. Visualized in the Meikirch Model (nested individual/society/environment circles) and the Barton & Grant (2006) Health Map (people → lifestyle → community → local economy → activities → built environment → natural environment → global ecosystem)." },
+  { term: "Demographic Transition", def: "The historical shift from high birth and death rates (pre-industrial) through rapid population growth (declining death rates, still-high birth rates) to low birth and death rates (post-industrial). Rate of Natural Increase (RNI) = birth rate − death rate. The foundational layer in Smith's nested four-transition framework (Demographic → Epidemiologic → Risk → Environmental Risk)." },
+  { term: "Epidemiological Transition", def: "The shift in dominant causes of death from infectious/parasitic diseases (TB, diphtheria, smallpox) toward chronic, non-communicable diseases (cancer, heart disease, diabetes) as societies develop. A key interpretive question: was the decline driven by medical science, or by social and environmental change (nutrition, sanitation, housing)? Sits one level above the demographic transition in Smith's framework." },
+  { term: "Risk Transition", def: "A distinct level in Smith's nested transition framework (between Epidemiologic Transition and Environmental Risk Transition). Tracks the shift from Traditional risks (sanitation, indoor smoke, undernutrition) to Modern risks (chemicals, outdoor air pollution, traffic, obesogenic environments) — feeding into the parallel disease shift in the epidemiologic transition." },
+  { term: "Environmental Risk Transition", def: "Smith's framework plotting severity of environmental health issues against wealth/development: a declining curve (LOCAL: household/community sanitation), an inverted-U (COMMUNITY: urban/regional pollution), and a rising curve (GLOBAL: climate change, biodiversity loss, emerging epidemics). Three axes of shift: Local→Global, Immediate→Delayed, Risks-to-Human-Health → Risks-to-Life-Support-Systems. Disease typology: Type 1 Traditional (communicable), Type 2 Modern (NCDs), Type 3 Non-transitional (injuries)." },
+  { term: "Kirk Smith on Environmental Risk Transition", def: "Smith, K.R. (1999), 'Development, Health, and Environmental Risk Transition.' Smith's contribution is the integration of four transitions — demographic, epidemiologic, risk, and environmental risk — into a single nested framework. Environmental conditions (economic and social development) drive the whole cascade, with household risks shrinking as community and then global risks dominate." },
+  { term: "Risk Overlap: Genesis, Transfer, Synergism", def: "Three ways risks interact during transitions. RISK GENESIS: new types of risk are created (e.g., globalized food → re-emerging infectious diseases; antibiotic resistance; COVID-19, Zika). RISK TRANSFER: efforts to reduce one risk worsen another (e.g., DDT for malaria; tube wells reducing diarrhea but causing arsenic poisoning in West Bengal). RISK SYNERGISM: combined risk exceeds the sum of its parts (e.g., HIV + drug-resistant TB)." },
+  { term: "Environmental Burden of Disease", def: "Disease burden attributable to environmental factors. Accounts for ~25% of the Global Burden of Disease overall, ~33% in children. Affects susceptibility to and recovery from disease/injury. Environmental control emphasizes prevention through 'upstream intervention' (addressing sources rather than treating effects)." },
+  { term: "Global Burden of Disease Study", def: "Burden of disease = the gap between current health status and an ideal in which everyone lives to life expectancy, with the gap caused by premature mortality, disability, and risk-factor exposure. The GBD Study was developed at Harvard for the World Bank, expanded in the mid-1990s, adopted by WHO, and is now administered by IHME at U Washington — 1000+ researchers across 100+ countries. Most recent: Lancet 2021. Used for setting health research/intervention priorities." },
+  { term: "Attributable Risk", def: "The amount of disease that would not exist today if exposure to a specified risk factor had not occurred in the past. Six key properties: (1) counterfactual reasoning; (2) intervenability (assumes a feasible intervention); (3) confounding assumption (other factors held constant); (4) SUMMATION — attributable risks for one disease often sum to >100%; (5) order-of-consideration matters (each intervention changes the constellation of remaining risks); (6) AR (population) vs ARP (among the exposed) are distinct — e.g., smoking is 18% AR but 90% ARP." },
+  { term: "Disability Adjusted Life Year (DALY)", def: "DALY = YLL + YLD. Invented by the World Bank in 1993 (Berkley et al., World Development Report). Combines mortality (Years of Lost Life) and morbidity (Years Lost to Disability, weighted by severity) into one metric. Assumes only sex and age can justify different weights — not income, culture, location, or class. Critical Disability Studies critiques (Katherine Wolf): 'epistemic injustice' of severities assigned by likely non-disabled experts; DALYs effectively count disabled people as partially alive; allocation by DALYs prioritizes non-disabled lives." },
+  { term: "Health Equity (Braveman 2017, Castro 2022)", def: "Braveman et al. (2017): health equity means 'everyone has a fair and just opportunity to be as healthy as possible' — requires removing obstacles like poverty, discrimination, powerlessness, lack of access to good jobs, education, housing, safe environments, healthcare. Both a process (reducing disparities) and an outcome (eliminating them). Castro et al. (2022): the Sustainable Health Equity Movement frames equity as requiring action on TWO intertwined challenges — social inequality AND the climate crisis — calling for an independent Commission, a UN Rapporteur, and accountability mechanisms." },
+  { term: "Gini Coefficient & Lorenz Curve", def: "Measure of income or wealth inequality. Gini = A/(A+B), where A is the area between the equality line and the Lorenz curve, and A+B is the total area under the equality line. Ranges 0–1 (sometimes scaled 0–100). 0 = perfect equality (everyone has the same); 1 = perfect inequality (one person has everything). Higher Gini = less equitable distribution." },
+  { term: "Social inequality and environmental health", def: "Wilkinson & Pickett (The Spirit Level, 2009): more equal rich countries have longer life expectancy and fewer health/social problems, while average national income shows little relationship. Two interlocking hypotheses: INEQUALITY/SUSTAINABILITY HYPOTHESIS (inequality → political asymmetry, consumption intensity, eroded cohesion → environmental degradation); CONTEXTUAL/SPILLOVER EFFECT (inequality harms everyone's health, not just the poor)." },
+  { term: "Social gradients in health", def: "Stepwise pattern across the full social hierarchy: each step up the ladder corresponds to better health, not just a poor-vs-rich gap. Demonstrated at the individual level (Whitehall) and the country level (more unequal rich countries are sicker, controlling for average income)." },
+  { term: "The Whitehall studies", def: "Long-running studies of British civil servants showing that at every occupational grade, workers lived longer than their immediate inferiors in the hierarchy. The bar chart in lecture (Marmot 2000, via Underwood Science 2014) shows relative death rate: Top officials = 1.0, Executive ≈ 1.3, Clerical ≈ 1.8, Other ≈ 1.9 — about twice the mortality. Established that the social gradient persists even among the employed and above poverty, pointing to control, status, and chronic stress." },
+  { term: "The Great Gatsby Curve", def: "Empirical pattern showing that countries with higher income inequality (Gini) tend to have lower intergenerational mobility — i.e., a child's adult earnings are more strongly predicted by their parents' earnings ('class stickiness'). Nordic countries low/low; UK, US, Italy high/high. Cited to Corak 2013 (IZA DP No. 7520), 'Income Inequality, Equality of Opportunity, and Intergenerational Mobility.'" },
+  { term: "Materialist vs Psycho-social approaches", def: "Two frameworks for linking the experience of inequity to health. MATERIALIST: health effects are driven by access to tangible resources (food, clothing, shelter, control over working conditions). PSYCHO-SOCIAL: health effects are mediated through symbolic resources (status, prestige, control). Most scholars treat them as complementary rather than rival." },
+  { term: "Pathways linking inequality and health", def: "The mechanisms running from social inequality to health outcomes. Operates through the absolute/relative income hypotheses (slide 70), materialist/psycho-social approaches (slide 72), and the inequality/sustainability hypothesis with its three sub-mechanisms (political asymmetry, consumption intensity, social cohesion). Includes the contextual/spillover effect: inequality harms population health above and beyond the direct impacts of poverty on the poor." },
+  { term: "Racial segregation and environmental quality", def: "Morello-Frosch & Jesdale (EHP 2006): air quality is worse for people of color AND worse in more segregated cities. Crucially, 'poverty doesn't explain away the segregation effect' — racial segregation is an INDEPENDENT axis of environmental inequality, not just a proxy for income. Treated in lecture as 'another measure of inequality.'" },
+  { term: "Cushing et al. (2015)", def: "'The Haves, the Have-Nots, and the Health of Everyone' (Annu Rev Public Health 36:193-209). Synthesizes ~117 sub-analyses linking inequality to environmental quality. Two key hypotheses: (1) INEQUALITY/SUSTAINABILITY HYPOTHESIS with three mechanisms: asymmetries in political power, environmental intensity of consumption, level of social cohesion/cooperation. (2) CONTEXTUAL/SPILLOVER EFFECT: inequality harms everyone, not just the poor — through psychosocial stress and erosion of social cohesion/public goods." },
+  { term: "Inequality, Trust, and Cooperation", def: "Inequality breeds rivalry and fear of others; less trusting individuals are less likely to recycle, take public transit, or buy 'green' products. Wilkinson & Pickett: more equal countries rank better on recycling. Implication: inequality undermines the collective social capacity to solve shared environmental problems (climate, conservation, pollution) that require trust and cooperation." },
+  { term: "Absolute Income Hypothesis", def: "From John Maynard Keynes: consumption rises with income, but at a diminishing rate. After basic needs are met, additional income has fewer health benefits. Policy implication: in wealthy societies, greater overall health is achieved by ensuring basic needs are met rather than by raising average income." },
+  { term: "Relative Income Hypothesis", def: "Savings and spending behavior is shaped by one's relative position in the income distribution — lower savings rates in more unequal societies. Social norms set a 'socially acceptable minimum level of consumption.' Inequality can diminish the health benefits of overall wealth. Policy implication: in wealthy societies, equity-oriented policy beats opportunity-oriented policy." },
+  { term: "Inequality, Equity, and Justice", def: "Equity (Braveman 2017): everyone has a fair and just opportunity to be healthy — both a process (reducing disparities) and an outcome (eliminating them). Equity-oriented policy works through TWO strategies (slides 86-87): (1) SOFTEN the impact — improve daily-life conditions (childhood education, nutrition, fair employment, social safety net, healthcare access); (2) NARROW the gap — address distribution of power/money/resources (progressive taxation, civic engagement of the marginalized, equity in trade agreements, equity monitoring)." },
+  { term: "TSPB Assignment", def: "The Trans-Science Policy Brief, the major writing assignment for Unit I. Students identify a current trans-scientific environmental health controversy, characterize the scientific evidence and its uncertainties, map the value-triad trade-offs (Environment / Economic / Equity), and recommend a policy stance with explicit reasoning. Specifications are on the bCourses assignment sheet — consult it directly." },
 ];
 
+// =====================================================
+// UNIT II — Chemicals (from Lec 7-9 slides)
+// =====================================================
+const UNIT_2 = [
+  { term: "First Industrial Revolution (1740-1840)", def: "Steam-powered mechanization. Energy: steam. Materials: steel and commodities. Built the machinery of mass production, raising productivity and volume. Foundation for the political economy of class-based labor division, urbanization, and global trade — but the chemical universe was still small compared to what came next." },
+  { term: "Second Industrial Revolution (1870s-1920s)", def: "The 'technological' revolution that birthed modern chemical exposure. Electricity, chemical engineering, petrochemicals, agricultural chemicals, and petroleum became the new materials base. Coincided with the rise of imperialism, global trade, mass-production capitalism, and corporate retailing — setting up the post-WWII mass consumption order." },
+  { term: "Post-war America: age of mass consumption", def: "American military and economic hegemony, the baby boom, the 'affluent society' of consumers. Built on government spending (housing, education, transportation), consumer credit, suburbanization, and television. Drove explosive growth in petrochemicals, plastics, transportation, and chemical-intensive agriculture. The era Rachel Carson (Silent Spring, 1962) interrogated when she renamed 'insecticides' as 'biocides.'" },
+  { term: "Toxic Substances Control Act (TOSCA, 1976)", def: "The 1976 U.S. law for regulating industrial chemicals. Widely criticized as toothless: until recently, manufactured chemicals did not require safety testing before commercial use. The TSCA inventory now lists over 86,000 chemicals, with ~42,000–43,000 active in U.S. commerce, ~2,000 new chemicals introduced annually, and only ~1.8% of high-priority chemicals having published EPA assessments." },
+  { term: "Frank Lautenberg Chemical Safety Act (2016)", def: "Major 2016 amendment of TSCA. Requires EPA review based on HEALTH RISK, not cost (no 'least burdensome' option). Mandates evaluation of existing chemicals on enforceable deadlines. Covers the entire lifecycle including 'legacy' uses (e.g., asbestos in homes) and reasonably foreseen uses. Shifts to weight-of-scientific-evidence review. Assumes workers are NOT consistently protected by PPE (conservative). Expands 'susceptible subpopulations' to include 'overburdened communities.' Broadens authority over PBT chemicals like PFAS. Increases transparency." },
+  { term: "Chemical Ignorance", def: "The condition in which the vast majority of chemicals have entered the marketplace without comprehensive and standardized information on their reproductive or chronic toxicities. Of ~86,000 TSCA-listed chemicals, only ~1.8% of high-priority ones have published EPA assessments. ~2,000 new chemicals enter U.S. commerce each year. Most remain unassessed." },
+  { term: "Environmental Public Health Continuum", def: "The chain linking pollution to disease, in five stages: SOURCES (industrial facilities, vehicles, products) → EMISSIONS (lbs/day released into the environment) → CONCENTRATION (μg/m³ in air, water, soil, food) → EXPOSURE/DOSE (what reaches and enters the body) → HEALTH EFFECT (cancer, asthma, etc.). Driving forces — social, political, economic, technological — sit upstream of all five stages." },
+  { term: "Sources (in the EPH Continuum)", def: "Where environmental chemicals originate. Includes smokestacks, vehicle emissions, dry cleaners, household dust and indoor air, consumer products, and personal care products. Identifying sources is the first step in considering chemical exposure pathways — and the leverage point for upstream regulation." },
+  { term: "Emissions", def: "The release of chemicals into the environment, measured in units per unit time or activity (e.g., lbs/day from a smokestack). The Toxic Release Inventory (TRI) characterizes emissions from large industrial facilities. Key attributes — toxicity, mass, volume, solubility, acidity, radioactivity, temperature, mutagenicity — predict both health effects and environmental fate and transport." },
+  { term: "Environmental Concentration", def: "The concentration of a pollutant in air, water, soil, or food. Chemicals may be modified by environmental transport — sunlight, for example, transforms volatile organic compound emissions into ambient ozone. Example from lecture: PM2.5 in the SF Bay Area spiked dramatically during the 2018 Camp Fire, demonstrating how concentration is decoupled from local sources during episodic events." },
+  { term: "Exposure", def: "The degree to which a chemical reaches the barriers between an individual and the environment — nose, eyes, mouth, skin. In a population, it depends not just on concentration but on how many people are in contact and for how long. Three main pathways: INHALATION, INGESTION, ABSORPTION (dermal). Also a function of WHERE pollutants are vs. where people spend their time (indoors vs outdoors)." },
+  { term: "Dose", def: "The amount of material that has penetrated into the body or critical organs — the best measure of exposure-related risk but difficult and expensive to determine. Requires biomonitoring of blood, urine, or tissues. National source: CDC's National Report on Human Exposures to Environmental Pollutants (NHANES). State source: Biomonitoring California." },
+  { term: "Fate and Transport", def: "How a chemical moves through and transforms within environmental media after emission. A chemical's toxicity, solubility, mass, volatility, persistence, and reactivity all determine how it disperses (air, water, soil), where it accumulates, and how it changes form. Critical for predicting where and how exposure will occur — a chemical emitted in one place can become a concentration problem far away." },
+  { term: "BPA (Bisphenol A)", def: "An endocrine-disrupting chemical produced at ~6 billion pounds per year. Used to make polycarbonate plastic and epoxy resins (including can linings, water pipe epoxy). Exposure occurs through dietary ingestion, workplace contact, and fetal/early childhood routes. Bioaccumulates. Chronic low-level exposure is documented in biomonitoring. Health effects: endocrine disruption, infertility, reduced sperm count, altered brain development, prostate and breast cancer, early female puberty, diabetes, obesity." },
+  { term: "BPS (Bisphenol S)", def: "The 'BPA-free' replacement marketed after the BPA backlash. Studies show BPS releases comparable estrogenic activity to BPA in many products, and disrupts hypothalamic neurogenesis in embryonic zebrafish at low doses (Kinch et al., PNAS 2015). The cautionary tale: substituting one structurally similar chemical for another without independent toxicity testing often reproduces the same hazard." },
+  { term: "Phthalates", def: "A family of endocrine-disrupting chemicals (DBP, DEHP, BBzP, DEP, DiBP, DMP) used as plasticizers and solvents. Found in food wrap, medical devices, personal care products (perfumes, lotions, cosmetics, hair spray), air fresheners, toys, flooring, wall coverings, and varnishes. Health effects: endocrine disruption, male reproductive effects (sperm), reduced fertility, learning and behavior effects, obesity, diabetes. Detected in nearly all pregnant women in NHANES studies, with women of childbearing age showing 50% higher DBP levels than other groups." },
+  { term: "Triclosan", def: "A widely-used antibacterial pesticide found in countertops, soaps, toothpaste, and cleaning products. Can alter thyroid hormones — critical for brain development and cardiovascular health. Regulatory status: banned from antibacterial soaps (2016), but NOT banned from toothpaste. A typical pattern in chemical regulation: partial restrictions that leave significant exposure pathways open." },
+  { term: "Ubiquity of chemical exposures", def: "The empirical finding that synthetic chemicals are detected in virtually every person tested. NHANES biomonitors ~350 chemicals — less than 3% of the ~8,000 high-use chemicals in U.S. commerce. The Woodruff et al. (2011) study of pregnant women in NHANES 2003-2004 found nearly universal prenatal exposure to multiple endocrine-disrupting chemicals. National Cancer Institute: 'To a disturbing extent, babies are born pre-polluted.'" },
+  { term: "Chemical Body Burden", def: "The total quantity of synthetic chemicals accumulated in an individual's body at any given time — the right-hand end of the Environmental Public Health Continuum. Measured via biomonitoring of blood, urine, and other tissues. The Morello-Frosch et al. (2016) Chemicals in Our Bodies study counted dozens of distinct chemicals in maternal and umbilical cord blood from a single pregnancy — demonstrating that body burden begins in utero." },
+  { term: "Endocrine Disrupting Chemicals (EDCs)", def: "Chemicals that interfere with the body's hormone system by: increasing/decreasing hormone production, mimicking hormones, converting one hormone to another, interfering with cell signaling, causing premature cell death, or preventing proper gene functioning. Strong evidence for adverse reproductive outcomes (infertility, cancers, malformations) and mounting evidence for effects on thyroid, neuroendocrine, obesity, metabolism, and glucose homeostasis (Diamanti-Kandarakis et al. 2009, Endocrine Society)." },
+  { term: "Declining fertility rates", def: "Documented decline in reproductive capacity since the mid-20th century: difficulty conceiving and maintaining pregnancy, rising testicular cancer rates, falling sperm counts, and falling fertility rates globally — particularly in the U.S. and other wealthy countries. The Woodruff et al. (2008) Summit on Environmental Challenges to Reproductive Health frames this as a question about the relationship between chemical exposures and reproductive function." },
+  { term: "Preterm birth", def: "Defined as birth before 37 weeks gestation. One out of eight U.S. babies is born prematurely; the rate has increased 36% since the early 1980s. A portion of preterm births is attributable to air pollution, with environmental contaminants and endocrine disruptors implicated in altered gestation timing." },
+  { term: "Obesity (as environmental health effect)", def: "Rising obesity and liver disease (NAFLD, NASH) in U.S. adolescents documented from 1988-2010. Obesogenic endocrine-disrupting chemicals — BPA, phthalates, some pesticides — are an emerging contributor alongside diet and activity. The framing rejects pure 'personal responsibility' models in favor of recognizing chemical drivers in the environment." },
+  { term: "Earlier onset of puberty", def: "Documented declining age of menarche in Europe and the U.S. from 1790 to 1980. A 2008 expert panel commissioned by the U.S. government concluded that earlier breast development and menarche onset 'suggest endocrine-disrupting chemicals and body fat are important factors associated' with the change. African American and Mexican American girls enter puberty earlier than white girls — a racialized pattern reflecting differential exposures." },
+  { term: "Periods (windows) of susceptibility", def: "Specific developmental stages during which exposure produces effects it would not produce at other times. The fertilized egg, embryo, fetus, infant, child, and adolescent each represent windows in which organ systems are actively differentiating and uniquely vulnerable to disruption. Cohn (2007) on DDT: girls exposed before age 14 had ~5× higher breast cancer risk at high exposure tertile vs ~3× for all ages — exposure timing changes the magnitude of effect." },
+  { term: "Exposure Timing", def: "The principle that WHEN exposure occurs matters as much as how much. Dutch Famine studies (Painter, Roseboom, Bleker 2005): maternal undernutrition in early gestation produced a 200% increase in coronary heart disease and more obesity in offspring; mid-gestation exposure increased obstructive airways disease; late-gestation exposure produced impaired glucose tolerance. The TIMING of the same insult determines which organ system carries the lifelong consequence." },
+  { term: "PBDE (Polybrominated Diphenyl Ethers)", def: "Brominated flame retardants once added to furniture, textiles, and electronics. California had the highest household-dust PBDE levels in the world; California residents had blood serum PBDE levels 100% higher than the rest of the U.S. (Zota et al. 2008). Linked to thyroid hormone disruption during pregnancy (Zota et al. 2012), and to disrupted fetal brain cell development, learning, memory, and attention deficits in animal studies. A success story for policy: subsequent regulation reduced PBDE body burdens in CA." },
+  { term: "Lead (neurological effects)", def: "Classic neurotoxic exposure: ingested or inhaled, then transported to soft tissue (kidney, liver, bone marrow, brain) and mineralizing tissue (teeth, bone). Inert bone lead can be 'mobilized' by pregnancy, lactation, or chronic disease. Lead exposure causes IQ decline; a 5-point population IQ shift doubles the number of children with IQ <70. CDC reference level has been ratcheted down repeatedly as the science improved — from 60 to 25 to 10 to 5 μg/dL — illustrating 'better science, stricter standards.'" },
+];
+
+// =====================================================
+// UNIT III — Risk Assessment (from Lec 10, 12-14)
+// =====================================================
+const UNIT_3 = [
+  { term: "Risk Assessment", def: "Per Casarett & Doull (2010): 'the systematic scientific characterization of potential adverse health effects resulting from human exposures to hazardous agents or situations.' Integrates evidence from human (epidemiological) studies, animal (toxicological) studies, in vitro tests, and structural-chemistry modeling to predict population health impacts. Provides the evidence base for regulatory standard-setting under uncertainty." },
+  { term: "Casarett & Doull's Risk Assessment Model", def: "The standard four-step framework, sitting between RESEARCH (laboratory and field exposure measurements, new mechanistic understandings, genomic information) on the input side and RISK MANAGEMENT (control, substitute, inform — public-health and political context) on the output side. The four risk-assessment steps: (1) HAZARD IDENTIFICATION, (2) DOSE-RESPONSE ASSESSMENT, (3) EXPOSURE ASSESSMENT, (4) RISK CHARACTERIZATION. The arrows run both directions — research findings reshape risk assessment, and risk-assessment gaps drive new research." },
+  { term: "Hazard Identification", def: "Step 1 of Casarett-Doull: determine whether a chemical is toxic and what specific harms it can cause. Pulls evidence from epidemiological studies, toxicology, in vitro work, and structural-chemistry modeling. Information sources include IRIS, ATSDR Tox Profiles, and the scientific literature. Outputs a qualitative judgment of strength of evidence — e.g., the EPA cancer categories: Carcinogenic to Humans / Likely / Suggestive / Inadequate Information / Not Likely." },
+  { term: "Dose-Response Assessment", def: "Step 2 of Casarett-Doull: quantitatively evaluate the relationship between dose and severity of toxic effect. Usually focused on the most sensitive disease outcome. Most commonly derived from animal experiments, with inferences extrapolated to humans; human epidemiological dose-response data is rare. The output is a dose-response curve that supports prediction of disease risk at exposures estimated in Step 3." },
+  { term: "Exposure Assessment", def: "Step 3 of Casarett-Doull: determine the sources, environmental concentrations, dose, and uncertainties of exposure to a given chemical. Characterizes magnitude, frequency, duration, and timing of exposure; identifies media (air, water, food, soil) and routes (inhalation, ingestion, dermal); and identifies which populations are exposed. Done via direct measurement (biomonitoring) and modeling. Limited by chronic-low-level data gaps." },
+  { term: "Risk Characterization", def: "Step 4 of Casarett-Doull: synthesizes all information from the previous three steps into a summary of human health risks. Specifies hazards associated with specific exposure levels, characterizes the magnitude of uncertainty and the assumptions used, and provides the evidence-based foundation for regulatory intervention. Key controversy: do you prioritize risk or uncertainty in the final characterization?" },
+  { term: "Objectives of Risk Assessment", def: "Why risk assessment exists in the regulatory context: (1) PRIORITIZATION — help agencies decide what to study and fund; (2) STANDARD SETTING — generate data for setting NAAQS, RfDs, RfCs, MCLs for drinking water, workplace RELs, fish advisories; (3) BALANCING — weigh risk against costs and benefits; (4) SUBPOPULATION ASSESSMENT — protect children and other susceptible groups; (5) MONITORING and EVALUATION — assess residual risk after controls are in place." },
+  { term: "Overestimation of risk", def: "Ways risk assessment can OVER-estimate true risk. Animal-to-human extrapolation may not be relevant; bioassays administer doses far higher than chronic human exposures; for carcinogens, LINEARITY assumed in the absence of mechanistic data is a conservative default that may overstate risk if the true curve is sublinear or threshold-based; the upper confidence limit on the dose-response slope is used by convention. Body's repair mechanisms may make low-dose effects smaller than the linear assumption predicts." },
+  { term: "Underestimation of risk", def: "Ways risk assessment can UNDER-estimate true risk. CONSTANT vs SPORADIC doses — cancer risk depends on how dose is distributed in time, not just total. The 24-month animal lifespan misses tumors with longer latency. Only one chemical at a time is tested, ignoring SYNERGISTIC effects (e.g., asbestos + smoking). Humans have inherited genetic dispositions to certain cancers. Population HETEROGENEITY is not captured by single-strain laboratory animals." },
+  { term: "Low-dose linearity assumption", def: "Default science-policy assumption used for CARCINOGENS in the absence of good mechanistic data: extrapolate the dose-response curve linearly from observed high doses down to zero. Justified for radiation, cigarette smoke, and aflatoxin where human data support linearity. Conservative — more likely to overestimate than underestimate. May be too conservative if the true low-dose curve is sublinear (concave) or threshold-based (e.g., when body repair mechanisms dominate at low doses)." },
+  { term: "Susceptibility in subpopulations", def: "Variation in vulnerability across the population: children, infants, in utero exposures, the elderly, those with pre-existing conditions, populations under cumulative environmental and social strain. Children are particularly susceptible because they breathe more air, drink more water, and eat more food per unit body weight; their biochemical and physical functions are immature; and developing organs are more vulnerable to injury. Risk assessment must consider these subgroups, not just an 'average person.'" },
+  { term: "Children's susceptibility", def: "Children are not 'little adults.' Kids ages 1–5 eat 3–4× more per unit body weight than adults; a one-year-old drinks 21× more apple juice per kg than an adult. Behaviorally they explore the world with hands and mouths, on the ground, ingesting more environmental contaminants. Central nervous system and immune development is most rapid in the first six years; myelination and lung development complete in adolescence; sex organ development continues to puberty. All these windows are uniquely vulnerable to chemical disruption." },
+  { term: "Toxicological studies — advantages", def: "Animal toxicology offers carefully controlled conditions with mostly closed systems allowing controlled dosing. Lets researchers identify thresholds of effect (or their absence), construct dose-response curves, and run acute, sub-chronic, and chronic protocols. Provides the bulk of mechanistic and dose-response evidence for chemicals where good human data is unavailable." },
+  { term: "Toxicological studies — limitations", def: "Two big extrapolations are always required: (1) HIGH dose to LOW dose — bioassays use doses far higher than typical chronic human exposures; (2) ANIMALS to HUMANS — rodent biology differs from human biology. Both extrapolations introduce science-policy assumptions. High doses may also overwhelm repair mechanisms or stimulate cell damage and growth in ways that don't apply at environmental doses." },
+  { term: "Types of animal toxicity studies", def: "Three protocol types by exposure duration. ACUTE: single dose — used to determine lethal dose (LD10, LD50). SUB-CHRONIC: intermittent or repeated over weeks to months (typically 90 days) — used in hazard ID and to identify NOAEL/LOAEL. CHRONIC: intermittent or repeated over a large fraction of a lifetime (~2 years for rodents) — identifies organ-system targets, doses producing specific effects, and chemicals causing cancer." },
+  { term: "Animals→Humans extrapolation", def: "A standard science-policy assumption in risk assessment: animal evidence is relevant to predicting human risk. Adjusted using an UNCERTAINTY FACTOR (UFanimal-to-human, typically 10×) to derive human reference values from animal Points of Departure. Embedded in the rule: 'humans respond like the most sensitive test species.' Limitations: relevance of the chosen animal model, species differences in metabolism, and the most sensitive species/sex/site convention." },
+  { term: "High→Low dose extrapolation", def: "The other major science-policy assumption: results from high-dose animal experiments are extrapolated to low-dose human exposures. For non-carcinogens, a NOAEL/threshold-based model with uncertainty factors. For carcinogens, low-dose LINEARITY is the default in the absence of mechanistic data. A benchmark-dose approach (ED10, LED10) plus a safety factor F is increasingly used to anchor the extrapolation at a defined response level." },
+  { term: "Humans respond like most sensitive test species", def: "A conservative science-policy default in risk assessment: when multiple animal species give different dose-response data, regulators assume humans respond like the MOST SENSITIVE species, sex, and site. Built into the choice of Point of Departure and uncertainty factors. Protects against false negatives but tends to overestimate risk if humans are in fact less sensitive than the most reactive lab species." },
+  { term: "Epidemiological studies — advantages", def: "Direct human evidence — no inter-species extrapolation required. Strongest when there is a 'SIGNATURE DISEASE' (a clear chemical-effect link): mesothelioma & asbestos, severe cerebral palsy & methylmercury (Minamata), clear cell vaginal carcinoma & DES, severe limb deformities & thalidomide. Strongest when attributable risk is high and background incidence is low." },
+  { term: "Epidemiological studies — limitations", def: "Epi methods are insensitive to diseases with high background rates (most respiratory diseases). Latency periods (cancer, neurotoxic effects) make surveillance hard. Accurate lifetime exposure measurement is challenging. Most environmental exposures are LOW LEVEL — bigger effects only show in occupational settings. As a result, the conditions where epi can decisively identify a hazard are 'important but rare.'" },
+  { term: "Case-control study", def: "Retrospective design: start with people who already have the disease (CASES) and people without (CONTROLS), then compare what proportion of each was exposed. Advantages: good for RARE diseases (mad cow, bladder cancer) and long-latency outcomes (cancer); time- and cost-efficient; easier to get adequate sample sizes. Limitations: SAMPLING BIAS (selecting cases/controls), RECALL BIAS (retrospective ascertainment of exposure), INTERVIEWER BIAS." },
+  { term: "Cohort study", def: "Prospective design: identify an exposed population BEFORE disease occurs, classify by exposure, and follow over time comparing rates of disease. Advantages: very low chance of selection bias, exposure measured independently of outcome (no recall bias), exposure measurement not influenced by knowing who developed disease. Limitations: bad for rare diseases (need huge cohorts); slow and very expensive; follow-up is challenging; attrition bias as subjects drop out." },
+  { term: "Signature disease", def: "A disease with such a strong, distinctive link to a specific chemical exposure that the relationship can be identified despite all the usual epidemiological obstacles. Examples: mesothelioma → asbestos; severe congenital cerebral palsy → methylmercury (Minamata); clear cell vaginal carcinoma → DES; severe limb reduction deformities → thalidomide. Requires HIGH attributable risk and LOW background incidence. Rare but powerful." },
+  { term: "Average person assumptions", def: "Standard values used in exposure assessment to estimate dose for a typical person. From the slides: weight 70 kg (male) / 60 kg (female) / 16 kg (1-6 yrs); lifespan 80 (male) / 82 (female); water 2 L/day; air intake 20 m³; food 1,500 g/day; soil 200 mg/day. Provide a baseline for calculation but obscure variability — actual exposures vary widely by age, sex, behavior, body size, and microenvironment." },
+  { term: "Limitations of exposure assessment", def: "Doses administered in experiments and even biomonitoring studies often don't reflect the amount of chemical reaching the TARGET site or organ system. Complexity and uncertainty grow rapidly with multiple co-exposures. Site- or situation-specific data is often missing. Chronic low-level exposure data is particularly poor — which is the regime most relevant to environmental health." },
+  { term: "Dose-response curve shapes", def: "Three canonical shapes (Duffus & Worth/IUPAC). (1) NO-THRESHOLD TOXICANT: linear curve from zero — the assumption used for carcinogens. (2) TOXICANT WITH HIGHER LOW-DOSE EFFECT: a U-shaped curve where very low doses produce effects (e.g., endocrine disruptors). (3) THRESHOLD TOXICANT: no effect until a threshold dose, then a sigmoid curve — used for non-carcinogens. Curve shape is the central science-policy assumption that drives standard-setting." },
+  { term: "Threshold vs Linear curves", def: "The choice of curve shape is policy-driven and chemical-class-driven. For CARCINOGENS, no-threshold (linear) is assumed because any DNA damage in principle could initiate cancer — meaning there is no 'safe' dose, just an acceptable risk level. For NON-CARCINOGENS, a threshold curve is assumed: below the NOAEL, no adverse effect is expected. Wrong assumption = wrong policy: a true threshold treated as linear over-regulates; a true linear treated as threshold leaves people unprotected." },
+  { term: "NOAEL", def: "No Observable Adverse Effect Level. The highest experimental dose at which no statistically or biologically significant adverse effect is detected. Used as a Point of Departure for non-carcinogenic risk assessment — uncertainty factors are applied below NOAEL to derive a reference dose (RfD) considered safe for humans." },
+  { term: "LOAEL", def: "Lowest Observable Adverse Effect Level. The lowest experimental dose at which a statistically or biologically significant adverse effect IS detected. Used when no clean NOAEL is available — uncertainty factors are then applied to extrapolate down to an estimated safe dose, with an additional factor often added for the NOAEL-to-LOAEL gap." },
+  { term: "LD10 and LD50", def: "Acute lethality benchmarks. LD50 is the dose (mg/kg body weight) causing death in 50% of exposed animals; LD10 in 10%. Used to compare toxicity across chemicals. From lecture: NaCl LD50 = 4000, phenobarbital sodium = 150, strychnine sulfate = 5, tetrodotoxin = 0.10, dioxin = 0.001, botulinum toxin = 0.00001 mg/kg — over nine orders of magnitude in toxicity." },
+  { term: "Point of Departure", def: "The dose on the dose-response curve from which low-dose extrapolation begins. Usually the NOAEL, LOAEL, or a benchmark dose (e.g., LED10 — the lower confidence limit on the dose producing a 10% response). From the Point of Departure, UNCERTAINTY FACTORS are applied downward to estimate doses considered safe for human populations, including their most sensitive subgroups." },
+  { term: "Uncertainty Factors", def: "Adjustments applied to the Point of Departure to derive a safe human dose. UFanimal-to-human (typically 10×) accounts for inter-species differences. UFhuman-variability (typically 10×) accounts for the most-sensitive humans vs the average. Additional factors may be added for LOAEL-to-NOAEL extrapolation, sub-chronic to chronic, or database deficiencies. Conventional 10s reflect the rough order of magnitude of inter-species and inter-individual variability." },
+  { term: "Synergistic effects", def: "When two or more co-exposures produce a combined risk GREATER than the sum of their individual risks. Classic example from lecture: lung cancer rates per 100,000 person-years — no asbestos / no smoking = 28.6; smoking only = 199.5; asbestos only = 500.5; BOTH = 935.8. The combined effect far exceeds simple addition. Most regulatory risk assessment tests one chemical at a time, systematically missing synergism." },
+  { term: "Cumulative risk assessment", def: "Approach (per National Academy of Sciences) that considers exposure and risk for MULTIPLE chemicals together when they act on the same adverse outcome — for example, lead, PCBs, and methylmercury all causing neurodevelopmental harm. Recognizes that real populations face co-exposures, not single chemicals. Increasingly invoked under TSCA-2016 to address 'overburdened communities' facing multiple simultaneous stressors." },
+];
+
+const UNITS = {
+  "1": { name: "Unit I — Foundations", terms: UNIT_1, accent: "var(--accent)" },
+  "2": { name: "Unit II — Chemicals", terms: UNIT_2, accent: "var(--teal)" },
+  "3": { name: "Unit III — Risk Assessment", terms: UNIT_3, accent: "var(--plum)" },
+  "all": { name: "All Units (Combined)", terms: [...UNIT_1, ...UNIT_2, ...UNIT_3], accent: "var(--accent)" },
+};
+
+// Tag terms with their unit for the All view
+UNIT_1.forEach(t => t.unit = "I");
+UNIT_2.forEach(t => t.unit = "II");
+UNIT_3.forEach(t => t.unit = "III");
+
 // ===== STATE =====
+let currentUnit = "all";
 let currentIndex = 0;
-let mode = 'study'; // 'study' | 'grid'
-let direction = 'term'; // 'term' | 'def'
-let order = TERMS.map((_, i) => i);
+let mode = 'study';
+let direction = 'term';
+let order = [];
 
 // ===== ELEMENTS =====
 const flashcard = document.getElementById('flashcard');
 const cardFront = document.getElementById('cardFront');
 const cardBack = document.getElementById('cardBack');
+const cardFrontTag = document.getElementById('cardFrontTag');
+const cardBackTag = document.getElementById('cardBackTag');
+const cardFrontUnit = document.getElementById('cardFrontUnit');
+const cardBackUnit = document.getElementById('cardBackUnit');
 const cardCounter = document.getElementById('cardCounter');
 const progressFill = document.getElementById('progressFill');
 const prevBtn = document.getElementById('prevBtn');
@@ -754,137 +820,168 @@ const nextBtn = document.getElementById('nextBtn');
 const studyMode = document.getElementById('studyMode');
 const gridMode = document.getElementById('gridMode');
 const termGrid = document.getElementById('termGrid');
-const currentNum = document.getElementById('currentNum');
-const totalNum = document.getElementById('totalNum');
 const statsText = document.getElementById('statsText');
-const cardTags = document.querySelectorAll('.card-tag');
+const unitDescription = document.getElementById('unitDescription');
 
-totalNum.textContent = TERMS.length;
+// Set initial counts
+document.querySelectorAll('.unit-count').forEach(el => {
+  const key = el.getAttribute('data-count');
+  el.textContent = UNITS[key].terms.length + ' terms';
+});
 
-// ===== STUDY MODE =====
+function getCurrentTerms() {
+  return UNITS[currentUnit].terms;
+}
+
+function resetOrder() {
+  const n = getCurrentTerms().length;
+  order = Array.from({length: n}, (_, i) => i);
+  currentIndex = 0;
+}
+
+function setAccent() {
+  document.documentElement.style.setProperty('--unit-accent', UNITS[currentUnit].accent);
+}
+
 function renderCard() {
   flashcard.classList.remove('flipped');
+  const wasFlipped = false;
   setTimeout(() => {
-    const t = TERMS[order[currentIndex]];
+    const terms = getCurrentTerms();
+    const t = terms[order[currentIndex]];
+    const unitLabel = currentUnit === "all" ? `Unit ${t.unit}` : '';
+
     if (direction === 'term') {
       cardFront.textContent = t.term;
       cardBack.textContent = t.def;
-      document.querySelector('.card-front .card-tag').textContent = '◆ Term';
-      document.querySelector('.card-back .card-tag').textContent = '◆ Definition';
-    } else {
-      cardFront.textContent = t.def;
-      cardBack.textContent = t.term;
-      document.querySelector('.card-front .card-tag').textContent = '◆ Definition';
-      document.querySelector('.card-back .card-tag').textContent = '◆ Term';
-    }
-    // Adjust front font size if showing definition
-    if (direction === 'def') {
-      cardFront.style.fontSize = 'clamp(16px, 2vw, 20px)';
-      cardFront.style.lineHeight = '1.55';
-      cardBack.style.fontSize = 'clamp(28px, 4vw, 44px)';
-      cardBack.style.lineHeight = '1.15';
-    } else {
+      cardFrontTag.textContent = '◆ Term';
+      cardBackTag.textContent = '◆ Definition';
       cardFront.style.fontSize = '';
       cardFront.style.lineHeight = '';
       cardBack.style.fontSize = '';
       cardBack.style.lineHeight = '';
+    } else {
+      cardFront.textContent = t.def;
+      cardBack.textContent = t.term;
+      cardFrontTag.textContent = '◆ Definition';
+      cardBackTag.textContent = '◆ Term';
+      cardFront.style.fontSize = 'clamp(15px, 1.6vw, 18px)';
+      cardFront.style.lineHeight = '1.55';
+      cardBack.style.fontSize = 'clamp(28px, 4vw, 42px)';
+      cardBack.style.lineHeight = '1.15';
     }
-  }, flashcard.classList.contains('flipped') ? 350 : 0);
+    cardFrontUnit.textContent = unitLabel;
+    cardBackUnit.textContent = unitLabel;
+  }, 0);
 
-  cardCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(TERMS.length).padStart(2, '0')}`;
-  currentNum.textContent = currentIndex + 1;
-  progressFill.style.width = `${((currentIndex + 1) / TERMS.length) * 100}%`;
+  const n = getCurrentTerms().length;
+  cardCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+  progressFill.style.width = `${((currentIndex + 1) / n) * 100}%`;
   prevBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex === TERMS.length - 1;
+  nextBtn.disabled = currentIndex === n - 1;
+  statsText.innerHTML = `Card <strong>${currentIndex + 1}</strong> of <strong>${n}</strong>`;
 }
 
-flashcard.addEventListener('click', () => {
-  flashcard.classList.toggle('flipped');
-});
-
-prevBtn.addEventListener('click', () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderCard();
-  }
-});
-
-nextBtn.addEventListener('click', () => {
-  if (currentIndex < TERMS.length - 1) {
-    currentIndex++;
-    renderCard();
-  }
-});
-
-document.addEventListener('keydown', (e) => {
-  if (mode !== 'study') return;
-  if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; renderCard(); }
-  else if (e.key === 'ArrowRight' && currentIndex < TERMS.length - 1) { currentIndex++; renderCard(); }
-  else if (e.key === ' ') { e.preventDefault(); flashcard.classList.toggle('flipped'); }
-});
-
-// ===== GRID MODE =====
 function renderGrid() {
   termGrid.innerHTML = '';
+  const terms = getCurrentTerms();
   order.forEach((termIdx, i) => {
-    const t = TERMS[termIdx];
+    const t = terms[termIdx];
     const card = document.createElement('div');
     card.className = 'term-card' + (direction === 'def' ? ' reverse' : '');
+    const unitPill = currentUnit === "all"
+      ? `<div class="unit-pill">Unit ${t.unit}</div>`
+      : '';
     card.innerHTML = `
       <div class="term-hint">click ↻</div>
       <div>
         <div class="term-number">№ ${String(i + 1).padStart(2, '0')}</div>
+        ${unitPill}
         <div class="term-title">${t.term}</div>
         <div class="term-definition">${t.def}</div>
       </div>
     `;
-    card.addEventListener('click', () => {
-      card.classList.toggle('revealed');
-    });
+    card.addEventListener('click', () => card.classList.toggle('revealed'));
     termGrid.appendChild(card);
   });
+  statsText.innerHTML = `<strong>${terms.length}</strong> terms · click any to reveal`;
 }
 
-// ===== MODE TOGGLES =====
+function renderAll() {
+  setAccent();
+  unitDescription.textContent = UNITS[currentUnit].name;
+  if (mode === 'study') {
+    studyMode.classList.add('active');
+    gridMode.classList.remove('active');
+    renderCard();
+  } else {
+    studyMode.classList.remove('active');
+    gridMode.classList.add('active');
+    renderGrid();
+  }
+}
+
+// ===== EVENTS =====
+flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
+
+prevBtn.addEventListener('click', () => {
+  if (currentIndex > 0) { currentIndex--; renderCard(); }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentIndex < getCurrentTerms().length - 1) { currentIndex++; renderCard(); }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (mode !== 'study') return;
+  const n = getCurrentTerms().length;
+  if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; renderCard(); }
+  else if (e.key === 'ArrowRight' && currentIndex < n - 1) { currentIndex++; renderCard(); }
+  else if (e.key === ' ') { e.preventDefault(); flashcard.classList.toggle('flipped'); }
+});
+
+// Unit selector
+document.getElementById('unitSelector').addEventListener('click', (e) => {
+  const btn = e.target.closest('.unit-btn');
+  if (!btn) return;
+  document.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentUnit = btn.dataset.unit;
+  resetOrder();
+  renderAll();
+});
+
+// Mode toggle
 document.getElementById('modeToggle').addEventListener('click', (e) => {
   if (!e.target.matches('.toggle-btn')) return;
   document.querySelectorAll('#modeToggle .toggle-btn').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
   mode = e.target.dataset.mode;
-  if (mode === 'study') {
-    studyMode.classList.add('active');
-    gridMode.classList.remove('active');
-    statsText.innerHTML = `Card <strong id="currentNum">${currentIndex + 1}</strong> of <strong>${TERMS.length}</strong>`;
-  } else {
-    studyMode.classList.remove('active');
-    gridMode.classList.add('active');
-    renderGrid();
-    statsText.innerHTML = `<strong>${TERMS.length}</strong> terms · click any to reveal`;
-  }
+  renderAll();
 });
 
+// Direction toggle
 document.getElementById('directionToggle').addEventListener('click', (e) => {
   if (!e.target.matches('.toggle-btn')) return;
   document.querySelectorAll('#directionToggle .toggle-btn').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
   direction = e.target.dataset.direction;
-  if (mode === 'study') renderCard();
-  else renderGrid();
+  renderAll();
 });
 
-// ===== SHUFFLE =====
+// Shuffle
 document.getElementById('shuffleBtn').addEventListener('click', () => {
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
   }
   currentIndex = 0;
-  if (mode === 'study') renderCard();
-  else renderGrid();
+  renderAll();
 });
 
 // ===== INIT =====
-renderCard();
+resetOrder();
+renderAll();
 </script>
 </body>
 </html>
