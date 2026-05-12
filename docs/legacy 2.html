@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESPM C167 — Unit I/II/III/IV Flashcards</title>
+<title>ESPM C167 — Unit I/II/III Flashcards</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -129,11 +129,11 @@
 
   .unit-btn {
     flex: 1;
-    min-width: 140px;
+    min-width: 160px;
     background: transparent;
     border: none;
     border-right: 1px solid var(--line);
-    padding: 18px 18px;
+    padding: 18px 20px;
     cursor: pointer;
     text-align: left;
     transition: all 0.25s;
@@ -570,7 +570,7 @@
     .card-face { padding: 32px 24px; }
     footer { flex-direction: column; gap: 8px; }
     .unit-btn { flex: 1 1 50%; min-width: 50%; border-bottom: 1px solid var(--line); }
-    .unit-btn:last-child { border-bottom: none; }
+    .unit-btn:nth-last-child(-n+2) { border-bottom: none; }
   }
 
   @keyframes fadeUp {
@@ -586,11 +586,11 @@
   <header>
     <div class="meta-bar">
       <span>ESPM C167 / Berkeley</span>
-      <span id="unitDescription">Units I–IV Combined</span>
+      <span id="unitDescription">Units I–III Combined</span>
       <span>Spring 2026</span>
     </div>
     <h1>Environmental<br>Health <em>&amp;</em> Equity</h1>
-    <p class="subtitle">Flashcards for Units I (Foundations), II (Chemicals), III (Risk Assessment), and IV (Case Studies) — built from the lecture slide decks.</p>
+    <p class="subtitle">Flashcards for Units I (Foundations), II (Chemicals), and III (Risk Assessment) — built from the lecture slide decks.</p>
   </header>
 
   <!-- UNIT SELECTOR -->
@@ -609,11 +609,6 @@
       <span class="unit-num">◆ Unit III</span>
       <span class="unit-name">Risk Assessment</span>
       <div class="unit-count" data-count="3">— terms</div>
-    </button>
-    <button class="unit-btn" data-unit="4">
-      <span class="unit-num">◆ Unit IV</span>
-      <span class="unit-name">Case Studies</span>
-      <div class="unit-count" data-count="4">— terms</div>
     </button>
     <button class="unit-btn active" data-unit="all">
       <span class="unit-num">◆ All Units</span>
@@ -676,7 +671,7 @@
   </div>
 
   <footer>
-    <span>ESPM C167 — Units I, II, III & IV</span>
+    <span>ESPM C167 — Units I, II & III</span>
     <span>← → arrows · space to flip</span>
   </footer>
 
@@ -791,71 +786,17 @@ const UNIT_3 = [
   { term: "Cumulative risk assessment", def: "Approach (per National Academy of Sciences) that considers exposure and risk for MULTIPLE chemicals together when they act on the same adverse outcome — for example, lead, PCBs, and methylmercury all causing neurodevelopmental harm. Recognizes that real populations face co-exposures, not single chemicals. Increasingly invoked under TSCA-2016 to address 'overburdened communities' facing multiple simultaneous stressors." },
 ];
 
-// =====================================================
-// UNIT IV — Case Studies (from Lec 15, 16, 18)
-// =====================================================
-const UNIT_4 = [
-  // ---- Arctic chemical case studies (Lec 15) ----
-  { term: "PCBs (Polychlorinated Biphenyls)", def: "A persistent organic pollutant (POP) on the Stockholm Convention's 'Dirty Dozen.' Used as industrial chemicals (transformer fluids, hydraulic fluids, coolants) until banned. Despite being banned, PCBs persist for decades in the environment and bioaccumulate up the food chain. PCB concentrations are alarmingly high in the blood of Arctic women of reproductive age — a paradox, since PCBs were never manufactured or used in the Arctic. Sources for food-chain contamination today (e.g., chickens, eggs) remain a concern (Weber et al. 2018, Environmental Sciences Europe)." },
-  { term: "Mercury", def: "A heavy metal contaminant entering the environment through mining and coal-fired power plants. Bioaccumulates in marine food webs, with methylmercury concentrating in long-lived predator fish (and ultimately in the marine mammals that Arctic Indigenous peoples eat). Historical case: Minamata Disease in Japan, where methylmercury dumped into Minamata Bay by the Chisso Corporation in the 1930s-50s caused severe congenital cerebral palsy in children whose mothers ate contaminated fish — a 'signature disease' linking the chemical to its effect." },
-  { term: "PFAS (Per- and Polyfluoroalkyl Substances)", def: "A family of 14,000+ synthetic 'forever chemicals' — extreme environmental persistence, resistant to degradation, sometimes called 'the new PCBs.' Used in non-stick coatings, water/stain repellents, firefighting foam, and food packaging. Regulatory response has been slow and incremental: voluntary phase-outs of PFOS (2002) and PFOA (2015); California and other states banning PFAS in flame retardants and food packaging; state drinking-water standards via litigation; FDA-producer agreements on some PFAS phase-outs (2016-24); proposed EU ban (2023). Industry research often documented harms years before public knowledge — a textbook 'late lessons from early warnings' case." },
-  { term: "Fate and Transport of chemicals", def: "How chemicals move and transform through environmental media after release. For Arctic contaminants, the journey involves atmospheric and oceanic transport from temperate industrial regions to the Arctic, where cold temperatures slow degradation and concentrate contaminants in fatty tissues of marine mammals. The Arctic functions as a global 'sink' for persistent chemicals, even though the contaminants are not produced or used there." },
-  { term: "Exposure pathways (Arctic)", def: "How Arctic populations come into contact with persistent organic pollutants and heavy metals. The dominant pathway is DIETARY: traditional foods from the marine food web (seal blubber, whale, fish) concentrate POPs and methylmercury through bioaccumulation and biomagnification. This makes Indigenous Arctic peoples — whose cultural and nutritional lifeways depend on these foods — bear among the highest chemical body burdens on Earth, despite living far from chemical-emission sources." },
-  { term: "The Grasshopper Effect", def: "Mechanism by which semi-volatile persistent organic pollutants (POPs) migrate globally toward the poles in a series of evaporation-condensation 'hops.' POPs released in warm temperate regions volatilize into the atmosphere, are carried poleward by winds, condense and deposit in cooler regions, then re-volatilize when temperatures rise — repeating until they reach cold polar regions where they get 'locked in.' Explains why the Arctic accumulates contaminants emitted thousands of miles away." },
-  { term: "Bioaccumulation", def: "The process by which a chemical builds up in an individual organism over its lifetime because the rate of uptake (from food, water, or air) exceeds the rate of metabolism or excretion. Lipophilic POPs accumulate in fatty tissues; methylmercury binds to proteins. Each organism stores a higher concentration than is present in its environment. Foundation for biomagnification up the food chain." },
-  { term: "Biomagnification", def: "The increase in concentration of a chemical at each successive trophic level in a food web. A small concentration in plankton becomes higher in small fish, higher still in large fish, and highest in apex predators like polar bears, seals, or humans who consume them. Critical to understanding Arctic exposure: even tiny background concentrations in Arctic waters become massive body burdens by the time contaminants reach Indigenous peoples eating top-predator marine mammals." },
-  { term: "The Dirty Dozen", def: "The 12 initial Persistent Organic Pollutants listed under the Stockholm Convention (2004). PESTICIDES: Aldrin, Chlordane, DDT, Dieldrin, Endrin, Heptachlor, Hexachlorobenzene (HCB), Mirex, Toxaphene. INDUSTRIAL CHEMICALS: Hexachlorobenzene, Polychlorinated biphenyls (PCBs), Polychlorinated dibenzofurans (PCDD/PCDF). All share: high persistence, long-range transport, bioaccumulation, and toxicity to humans and wildlife." },
-  { term: "Sentinel species", def: "Per Marla Cone (Silent Snow): species that, through unusual sensitivity or accessibility, reveal environmental contamination before it is detected in humans. Arctic marine mammals (polar bears, seals, beluga whales) served as sentinels for POPs — their high body burdens alerted scientists to a global pollution problem decades before the human health consequences were widely recognized. 'Science is often serendipity' (Cone, 26): the discovery of Arctic contamination depended on incidental observations and new technologies." },
-  { term: "Arctic Paradox", def: "Marla Cone's framing: the Arctic — geographically remote from industrial production, sparsely populated, perceived as 'pristine' — turns out to host the highest chemical body burdens on Earth, concentrated in Indigenous populations who contribute least to global chemical pollution. Cone calls this 'perhaps the greatest environmental injustice on Earth.' The paradox combines long-range atmospheric transport, the grasshopper effect, biomagnification through long-lived marine food webs, and dietary dependence on those foods for cultural and nutritional reasons." },
-  { term: "Cultural implications of Arctic exposure", def: "Arctic Indigenous peoples face an impossible choice. Traditional foods (whale, seal, fish) carry the chemical body burdens that result from being apex predators in a contaminated marine food web. But these foods are not just nutrition — they are central to cultural identity, kinship, language, intergenerational knowledge, and economic survival. Telling people to stop eating traditional foods would destroy lifeways; not doing so allows continued exposure. The contamination is produced by chemicals manufactured by people who do not share these foods or this culture." },
-  { term: "Arctic Monitoring and Assessment Programme (AMAP)", def: "Established 1991. Provides reliable scientific information on the status of, and threats to, the Arctic environment, and supplies scientific advice to Arctic governments on remedial and preventive actions related to contaminants and climate change. A key institutional vehicle for translating Arctic environmental monitoring into international policy under the Stockholm Convention and related frameworks." },
-
-  // ---- David Gee / Precautionary Principle (Lec 15) ----
-  { term: "The Precautionary Principle", def: "Per Raffensperger and Tickner (1999): 'When an activity raises threats of harm to human health or the environment, precautionary measures should be taken, even if some cause-and-effect relationships are not fully established scientifically. In this context the proponent of an activity, rather than the public, should bear the burden of proof. The process must be open, informed, and democratic, and must include potentially affected parties. It must also involve an examination of the full range of alternatives, including no action.' Inverts the conventional regulatory default of requiring proof of harm before action." },
-  { term: "Late Lessons from Early Warnings", def: "Gee, David (2006), 'Late Lessons from Early Warnings: Toward Realism and Precaution with Endocrine Disrupting Substances' (EHP 114(1): 152-160). Argues that for many environmental chemicals, scientific 'early warnings' of harm appeared decades before regulatory action, and the cost of delayed action — measured in cancer, infertility, developmental damage — has been enormous. PFAS is a current example: industry research documented harms years before public knowledge. Calls for science that better reflects the realities of multicausality, mixtures, dose timing, and system dynamics." },
-  { term: "Gee's argument on Precaution", def: "David Gee's interpretive framework for the precautionary principle (2006). Key issues include: (1) the CONTINGENT nature of knowledge — scientific 'certainty' is always provisional; (2) the distinct meanings of PRECAUTION, PREVENTION, RISK, UNCERTAINTY, and IGNORANCE — each calling for different policy responses; (3) the use of DIFFERENTIAL LEVELS OF PROOF — what counts as 'enough evidence' should vary with the stakes; (4) METHODOLOGICAL and CULTURAL BIASES within environmental health science that systematically tilt the field toward false negatives (missing real harms). The precautionary principle counter-weights these biases." },
-  { term: "Precautionary Principle as trans-science framework", def: "The precautionary principle is itself a trans-scientific tool: it provides a policy framework for acting under exactly the conditions science cannot resolve — data gaps, irreducible uncertainty, contested risk assessment, and value-laden choices about acceptable harm. Rather than waiting for definitive scientific proof (which may never come, or may come too late), it shifts the burden of proof onto proponents of an activity, requires open democratic deliberation, and demands consideration of alternatives including no action." },
-
-  // ---- Zoonotic disease general (Lec 16 & 18) ----
-  { term: "Zoonosis (Zoonotic Disease)", def: "Per WHO: an infectious disease that has jumped from a non-human animal to humans. Pathogens may be bacterial, viral, parasitic, or unconventional agents; spread via direct contact, food, water, or environment. A major global public-health problem because of close human-animal relationships in agriculture, companion animals, and natural environments. Comprises a large share of newly identified infectious diseases (Ebola, salmonellosis) and many existing ones; some begin as zoonoses but mutate to human-only strains (HIV); others have pandemic potential (SARS-CoV-2)." },
-  { term: "One Health framework", def: "Per the Tripartite + UNEP / OHHLEP (2021): 'an integrated, unifying approach that aims to sustainably balance and optimize the health of people, animals and ecosystems.' Recognizes that human, domestic-animal, wild-animal, plant, and ecosystem health are inseparable and interdependent. Mobilizes multiple sectors and disciplines to address shared needs — clean water, energy, air, safe food, climate action — while tackling threats like zoonotic disease. The dominant international framework for governing pandemic prevention and ecosystem-mediated disease." },
-  { term: "Etiology", def: "The study of the causes of disease. In environmental health, an etiology is not just a biological agent (a microbe, a chemical) but the social, ecological, and historical conditions that bring the agent into contact with susceptible populations. Yellow fever's 19th-century etiologies, for example, shifted across MIASMA theory (foul vapors from swamps), BACTERIOLOGY (germs as agents of disease), and VIROLOGY (viruses, with mosquitoes as vectors) — each framing producing different public-health responses." },
-  { term: "Disease transmission cycles", def: "The ecological pathways by which a zoonotic pathogen circulates between hosts. For yellow fever, three cycles: SYLVATIC (forest cycle, among non-human primates and forest mosquitoes), SAVANNAH/INTERMEDIATE (an ecotone where forest meets cleared land, with mixed primate-human exposure), and URBAN (human-to-human via Aedes aegypti). Ecological change — deforestation, plantation agriculture, urbanization — moves pathogens across these cycles, often producing epidemics." },
-
-  // ---- Yellow Fever case study (Lec 16) ----
-  { term: "Endemic", def: "Per CDC: the constant presence and/or usual prevalence of a disease or infectious agent in a population within a geographic area. Yellow fever became endemic in New Orleans by 1810 — meaning it was continuously present and expected, rather than an unusual occurrence. Endemicity often reflects the establishment of suitable ecological and demographic conditions for sustained transmission." },
-  { term: "Hyperendemic", def: "Per CDC: persistent, high levels of disease occurrence. More intense than ordinary endemicity. Describes settings where a disease is not only continuously present but produces consistently high case counts, often because environmental, ecological, or demographic conditions sustain very efficient transmission." },
-  { term: "Epidemic", def: "Per CDC: an increase, often sudden, in the number of cases of a disease above what is normally expected in that population in that area. Distinct from endemicity (which is the expected baseline). The 1853 New Orleans yellow fever epidemic killed nearly 15% of the city's population; the 1878 Lower Mississippi Valley epidemic produced 120,000 cases and 20,000 deaths." },
-  { term: "Outbreak", def: "Per CDC: an epidemic limited to a specific geographic area. Smaller in geographic scale than an epidemic. The distinction matters for public-health response — outbreaks may be controllable with localized intervention, whereas epidemics require broader strategies." },
-  { term: "Cluster", def: "Per CDC: an aggregation of cases grouped in place and time that are suspected to be greater than the number expected, even though the expected number may not be known. Often the earliest signal that something unusual is happening, before the expected baseline can be established with statistical confidence." },
-  { term: "Pandemic", def: "Per CDC: an epidemic that has spread over several countries or continents, usually affecting many people. SARS-CoV-2 (COVID-19) was the most recent example. Pandemics require coordinated international response and surface fundamental tensions between national sovereignty, global trade, and shared infectious-disease risk." },
-  { term: "Aedes aegypti", def: "The mosquito vector of yellow fever (and dengue, Zika, chikungunya). Evolved to flourish in domesticated, human-built spaces: feeds on human bloodmeal and sucrose, and breeds in stagnant water in manmade receptacles. Sugar plantations and 19th-century cities provided ideal habitat — cisterns, water barrels, clay pots, drainage ditches, ornate cemeteries — letting populations explode wherever colonial sugar economy and urban growth combined." },
-  { term: "Yellow Fever — historical endemism", def: "Yellow fever became endemic in New Orleans by 1810, with epidemics escalating in frequency and intensity through the 1850s. The 1853 epidemic killed ~7,849 New Orleans residents (~15% of population) and was the most devastating of the antebellum era. The 1878 Lower Mississippi Valley epidemic killed ~20,000 across the region. The 1905 New Orleans outbreak (~900+ deaths) was the last U.S. yellow fever outbreak; it was also the first to use systematic vector control." },
-  { term: "Sugar production and yellow fever ecology", def: "Per Urmi Willoughby (2017): sugar plantations created near-perfect ecological conditions for Aedes aegypti. Wetland deforestation and reclamation, drainage ditches and canals, cisterns, water barrels, and clay pots all formed stagnant freshwater breeding sites; sugarcane provided sucrose for adult mosquitoes. Sugar's expansion in Louisiana (especially the 1820s-1850s boom) directly produced the disease ecology that made yellow fever endemic. New Orleans epidemics in 1797, 1811, 1817, 1819, and 1822 all coincided with canal construction or repair." },
-  { term: "Landscape change and yellow fever epidemics", def: "Ecological alterations associated with railroad and canal construction directly facilitated yellow fever epidemics in 19th-century Louisiana. GEOGRAPHY OF TRANSMISSION: completed canals and rail lines spread the virus from city to plantations. LABOR: immigrant laborers building canals and railroads suffered high morbidity and mortality. MOSQUITO HABITAT: A. aegypti spread through new savannah-like ecotones and into the city. ENDEMISM: by 1810, the disease was continuously present in New Orleans." },
-  { term: "Demographics and yellow fever susceptibility", def: "Per Willoughby (2017): demographic change increased epidemic likelihood by providing waves of non-immune migrants. 1796-1820: most migrants came from the Caribbean and had already encountered yellow fever; 1820s-30s: migrants from the eastern U.S. with no prior exposure; 1840s-50s: Irish, German, and other European immigrants, also unexposed. These newcomers — especially those building railroads and canals — became the hosts that sustained increasingly severe epidemics." },
-  { term: "Race, ideology, and yellow fever immunity", def: "Per Willoughby (2017): shifting ideas about racial immunity to yellow fever reflected social and political tensions. CREOLE IMMUNITY: yellow fever framed as a 'strangers' disease.' SEASONING: children acquired immunity through childhood infection. ACCLIMATIZATION: environmental factors thought to confer immunity. MYTH OF BLACK IMMUNITY: in the 1860s, scientific racism asserted Blacks were 'naturally immune' to tropical diseases — used to justify forcing enslaved and later Black laborers into yellow fever zones. These ideologies persisted into the 20th century despite the advent of bacteriology and virology, showing how race shaped both scientific knowledge and public-health practice." },
-  { term: "Etiologies of Yellow Fever (19th century)", def: "Three successive (and overlapping) explanatory frameworks. (1) ENVIRONMENTAL: MIASMAS — foul vapors emerging from swamps — and FILTH, with moral associations to impurity and intemperance. (2) BACTERIOLOGY: post-Bacteriological Revolution (late 1860s), Germ Theory framing bacteria as agents of disease, launching modern medical institutions but continuing rhetoric of filth tied to race. (3) VIROLOGY: advanced microscopy revealed viruses; Walter Reed identified the mosquito as the vector (1881) and led abatement campaigns in the Caribbean. Each etiology produced different public-health responses (cleansing fires, quarantine, vector control)." },
-  { term: "Mosquito abatement and Imperialism", def: "After the mosquito was identified as the yellow fever vector (Charles Finley, 1881), American corporate interests (United Fruit Company and others) funded virology research at Tulane University in New Orleans. Vector-control programs were then implemented across the Caribbean Basin following the Spanish-American War — protecting banana, coffee, and other plantations and enabling construction of the Panama Canal (1904-12). Public health and corporate imperialism developed together. Willoughby (2017) notes that the sporadic use of pesticides and vaccines has had consequences that are 'becoming increasingly apparent,' including evolved resistance and toxic effects on water systems." },
-
-  // ---- COVID-19 case study (Lec 18) ----
-  { term: "Coronaviruses", def: "A large family of viruses that usually cause mild to moderate upper-respiratory illnesses. Three serious zoonotic coronaviruses have emerged in the 21st century. (1) SARS (SARS-CoV): originated Guangdong, China, Nov 2002; bat reservoir, intermediate host probably palm civet or raccoon dog; 8,098 cases in 26 countries, 774 deaths. (2) MERS (MERS-CoV): Middle East, summer 2012; primary reservoirs dromedary camels and bats; 2,500 cases in 27 countries, 866 deaths. (3) COVID-19 (SARS-CoV-2): emerged late 2019, became the most consequential pandemic in a century." },
-  { term: "COVID-19 case study", def: "Pandemic caused by the novel coronavirus SARS-CoV-2, beginning late 2019. Illustrates each of the unit's frameworks. As a ZOONOTIC DISEASE: emerged from an animal reservoir with debated transmission pathways. Demands the ONE HEALTH framework to address human-animal-ecosystem linkages. Surfaces RISK ASSESSMENT challenges around uncertainty, contested evidence, and policy under irreducible scientific debate. Invites application of the PRECAUTIONARY PRINCIPLE to questions of vaccination, surveillance, future pandemic prevention, and addressing social determinants that shape susceptibility, transmission, morbidity, and mortality across populations." },
-];
-
 const UNITS = {
   "1": { name: "Unit I — Foundations", terms: UNIT_1, accent: "var(--accent)" },
   "2": { name: "Unit II — Chemicals", terms: UNIT_2, accent: "var(--teal)" },
   "3": { name: "Unit III — Risk Assessment", terms: UNIT_3, accent: "var(--plum)" },
-  "4": { name: "Unit IV — Case Studies", terms: UNIT_4, accent: "var(--moss)" },
-  "all": { name: "All Units (Combined)", terms: [...UNIT_1, ...UNIT_2, ...UNIT_3, ...UNIT_4], accent: "var(--accent)" },
+  "all": { name: "All Units (Combined)", terms: [...UNIT_1, ...UNIT_2, ...UNIT_3], accent: "var(--accent)" },
 };
 
 // Tag terms with their unit for the All view
 UNIT_1.forEach(t => t.unit = "I");
 UNIT_2.forEach(t => t.unit = "II");
 UNIT_3.forEach(t => t.unit = "III");
-UNIT_4.forEach(t => t.unit = "IV");
 
 // ===== STATE =====
 let currentUnit = "all";
